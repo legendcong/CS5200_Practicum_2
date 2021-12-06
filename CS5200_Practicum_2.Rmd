@@ -1,6 +1,8 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Practicum_Two"
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 ```{r}
@@ -36,4 +38,41 @@ CREATE TABLE Author (
   initials TEXT
 );
 ```
+
+Loading Libraries
+
+```{r warning=FALSE}
+library(XML)
+library(DBI)
+library(knitr)
+library(sqldf)
+options(sqldf.driver = "SQLite")
+options(warn=-1)
+```
+
+```{r}
+path <- "/Users/legen/Desktop/PracticumTwo/"
+fn <- "pubmed_sample.xml"
+file = paste0(path, fn)
+xmlDOM <- xmlParse(file)
+r <- xmlRoot(xmlDOM)
+size <- xmlSize(r)
+```
+
+## 1.Inspect the pubmed Catalog XML 
+
+```{r warning = FALSE}
+xparse <- xmlParse("pubmed_sample.xml")
+xparse
+```
+
+## 2.Load the pubmed Catalog XML directly into a dataframe using xmlToDataFrame.
+
+```{r}
+xmldata <- xmlToDataFrame("pubmed_sample.xml")
+print(xmldata)
+```
+
+
+
 
