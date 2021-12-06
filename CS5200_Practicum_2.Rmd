@@ -1,0 +1,39 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(RSQLite)
+
+fpath = "/Users/legen/Desktop/PracticumTwo"
+dbfile = "PracticumTwo.sqlite"
+
+dbcon <- dbConnect(RSQLite::SQLite(), paste0(fpath,dbfile))
+```
+
+```{sql connection=dbcon}
+DROP TABLE IF EXISTS Author;
+```
+
+```{sql connection=dbcon}
+DROP TABLE IF EXISTS Jounal;
+```
+
+```{sql connection=dbcon}
+CREATE TABLE Journal (
+  ISSN TEXT PRIMARY KEY,
+  isoabbreviation TEXT NOT NULL,
+  title TEXT NOT NULL
+);
+```
+
+```{sql connection=dbcon}
+CREATE TABLE Author (
+  authorId INTEGER PRIMARY KEY,
+  lastName TEXT,
+  foreName TEXT,
+  initials TEXT
+);
+```
+
