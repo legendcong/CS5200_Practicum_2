@@ -215,40 +215,28 @@ pre code {
 
 
 <!-- rnb-text-begin -->
+<div id="create-database-schema" class="section level1">
+<h1>Create database schema</h1>
+<div id="connect-to-database" class="section level2">
+<h2>Connect to database</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShSU1FMaXRlKVxuXG5mcGF0aCA9IFwiL1VzZXJzL2xlZ2VuL0Rlc2t0b3AvUHJhY3RpY3VtVHdvXCJcbmRiZmlsZSA9IFwiUHJhY3RpY3VtVHdvLnNxbGl0ZVwiXG5cbmRiY29uIDwtIGRiQ29ubmVjdChSU1FMaXRlOjpTUUxpdGUoKSwgcGFzdGUwKGZwYXRoLGRiZmlsZSkpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShSU1FMaXRlKVxuXG5kYkZpbGUgPSBcIi4vUHJhY3RpY3VtMi5zcWxpdGVcIlxuXG5kYmNvbiA8LSBkYkNvbm5lY3QoUlNRTGl0ZTo6U1FMaXRlKCksIGRiRmlsZSlcbmBgYCJ9 -->
 <pre class="r"><code>library(RSQLite)
 
-fpath = &quot;/Users/legen/Desktop/PracticumTwo&quot;
-dbfile = &quot;PracticumTwo.sqlite&quot;
+dbFile = &quot;./Practicum2.sqlite&quot;
 
-dbcon &lt;- dbConnect(RSQLite::SQLite(), paste0(fpath,dbfile))</code></pre>
+dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="create-table-author" class="section level2">
+<h2>Create table Author</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3I7XG5gYGAifQ== -->
 <pre class="sql"><code>DROP TABLE IF EXISTS Author;</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VuYWw7XG5gYGAifQ== -->
-<pre class="sql"><code>DROP TABLE IF EXISTS Jounal;</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgSm91cm5hbCAoXG4gIElTU04gVEVYVCBQUklNQVJZIEtFWSxcbiAgaXNvYWJicmV2aWF0aW9uIFRFWFQgTk9UIE5VTEwsXG4gIHRpdGxlIFRFWFQgTk9UIE5VTExcbik7XG5gYGAifQ== -->
-<pre class="sql"><code>CREATE TABLE Journal (
-  ISSN TEXT PRIMARY KEY,
-  isoabbreviation TEXT NOT NULL,
-  title TEXT NOT NULL
-);</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -264,56 +252,90 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), paste0(fpath,dbfile))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Loading Libraries</p>
+</div>
+<div id="create-table-jounal" class="section level2">
+<h2>Create table Jounal</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShYTUwpXG5saWJyYXJ5KERCSSlcbmxpYnJhcnkoa25pdHIpXG5saWJyYXJ5KHNxbGRmKVxub3B0aW9ucyhzcWxkZi5kcml2ZXIgPSBcIlNRTGl0ZVwiKVxub3B0aW9ucyh3YXJuPS0xKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsO1xuYGBgIn0= -->
+<pre class="sql"><code>DROP TABLE IF EXISTS Journal;</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IG5lYXIgXCIpXCI6IHN5bnRheCBlcnJvclxuRmFpbGVkIHRvIGV4ZWN1dGUgU1FMIGNodW5rXG4ifQ== -->
+<pre><code>Error: near &quot;)&quot;: syntax error
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="loading-libraries" class="section level1">
+<h1>Loading Libraries</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShYTUwpXG5saWJyYXJ5KHhzbHQpXG4jbGlicmFyeShEQkkpXG4jbGlicmFyeShrbml0cilcbiNsaWJyYXJ5KHNxbGRmKVxuI29wdGlvbnMoc3FsZGYuZHJpdmVyID0gXCJTUUxpdGVcIilcbiNvcHRpb25zKHdhcm49LTEpXG5gYGAifQ== -->
 <pre class="r"><code>library(XML)
-library(DBI)
-library(knitr)
-library(sqldf)
-options(sqldf.driver = &quot;SQLite&quot;)
-options(warn=-1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aCA8LSBcIi9Vc2Vycy9sZWdlbi9EZXNrdG9wL1ByYWN0aWN1bVR3by9cIlxuZm4gPC0gXCJwdWJtZWRfc2FtcGxlLnhtbFwiXG5maWxlID0gcGFzdGUwKHBhdGgsIGZuKVxueG1sRE9NIDwtIHhtbFBhcnNlKGZpbGUpXG5yIDwtIHhtbFJvb3QoeG1sRE9NKVxuc2l6ZSA8LSB4bWxTaXplKHIpXG5gYGAifQ== -->
-<pre class="r"><code>path &lt;- &quot;/Users/legen/Desktop/PracticumTwo/&quot;
-fn &lt;- &quot;pubmed_sample.xml&quot;
-file = paste0(path, fn)
-xmlDOM &lt;- xmlParse(file)
-r &lt;- xmlRoot(xmlDOM)
-size &lt;- xmlSize(r)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<div id="inspect-the-pubmed-catalog-xml" class="section level2">
-<h2>1.Inspect the pubmed Catalog XML</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueHBhcnNlIDwtIHhtbFBhcnNlKFwicHVibWVkX3NhbXBsZS54bWxcIilcbnhwYXJzZVxuYGBgIn0= -->
-<pre class="r"><code>xparse &lt;- xmlParse(&quot;pubmed_sample.xml&quot;)
-xparse</code></pre>
+library(xslt)
+#library(DBI)
+#library(knitr)
+#library(sqldf)
+#options(sqldf.driver = &quot;SQLite&quot;)
+#options(warn=-1)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="load-the-pubmed-catalog-xml-directly-into-a-dataframe-using-xmltodataframe." class="section level2">
-<h2>2.Load the pubmed Catalog XML directly into a dataframe using xmlToDataFrame.</h2>
+<div id="load-xml-data-to-database" class="section level1">
+<h1>Load XML data to database</h1>
+<div id="read-xml-file" class="section level2">
+<h2>Read XML file</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueG1sZGF0YSA8LSB4bWxUb0RhdGFGcmFtZShcInB1Ym1lZF9zYW1wbGUueG1sXCIpXG5wcmludCh4bWxkYXRhKVxuYGBgIn0= -->
-<pre class="r"><code>xmldata &lt;- xmlToDataFrame(&quot;pubmed_sample.xml&quot;)
-print(xmldata)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueG1sUGF0aCA8LSBcIi4vcHVibWVkX3NhbXBsZS54bWxcIlxueG1sRG9jID0gcmVhZF94bWwoeG1sUGF0aClcbmBgYCJ9 -->
+<pre class="r"><code>xmlPath &lt;- &quot;./pubmed_sample.xml&quot;
+xmlDoc = read_xml(xmlPath)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="load-journal-table" class="section level2">
+<h2>Load Journal table</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeHRyYWN0IEpvdXJuYWwgRGF0YVxueHNsUGF0aCA9IFwiLi9qb3VybmFsLnhzbFwiXG54c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9XCJ4c2x0XCIpXG5qb3VybmFsX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpXG5qb3VybmFscyA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGpvdXJuYWxfcmF3KSkpXG5kYldyaXRlVGFibGUoZGJjb24sbmFtZSA9IFwiSm91cm5hbFwiLCB2YWx1ZSA9IGpvdXJuYWxzLCBhcHBlbmQgPSBUUlVFKVxuYGBgIn0= -->
+<pre class="r"><code># Extract Journal Data
+xslPath = &quot;./journal.xsl&quot;
+xslDoc = read_xml(xslPath,package=&quot;xslt&quot;)
+journal_raw = xml_xslt(xmlDoc,xslDoc)
+journals = unique(xmlToDataFrame(XML::xmlParse(journal_raw)))
+dbWriteTable(dbcon,name = &quot;Journal&quot;, value = journals, append = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="load-author-table" class="section level2">
+<h2>Load Author table</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeHRyYWN0IEpvdXJuYWwgRGF0YVxueHNsUGF0aCA9IFwiLi9hdXRob3IueHNsXCJcbnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT1cInhzbHRcIilcbmF1dGhvcl9yYXcgPSB4bWxfeHNsdCh4bWxEb2MseHNsRG9jKVxuYXV0aG9ycyA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGF1dGhvcl9yYXcpKSlcbiNhdXRob3JzID0gY2JpbmQoYXV0aG9ySWQ9cm93bmFtZXMoYXV0aG9ycyksYXV0aG9ycylcbiNkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9IFwiQXV0aG9yXCIsIHZhbHVlID0gYXV0aG9ycywgYXBwZW5kID0gVFJVRSlcbmBgYCJ9 -->
+<pre class="r"><code># Extract Journal Data
+xslPath = &quot;./author.xsl&quot;
+xslDoc = read_xml(xslPath,package=&quot;xslt&quot;)
+author_raw = xml_xslt(xmlDoc,xslDoc)
+authors = unique(xmlToDataFrame(XML::xmlParse(author_raw)))
+#authors = cbind(authorId=rownames(authors),authors)
+#dbWriteTable(dbcon,name = &quot;Author&quot;, value = authors, append = TRUE)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+</div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlByYWN0aWN1bV9Ud28iDQpvdXRwdXQ6DQogIHBkZl9kb2N1bWVudDogZGVmYXVsdA0KICBodG1sX25vdGVib29rOiBkZWZhdWx0DQotLS0NCg0KYGBge3J9DQpsaWJyYXJ5KFJTUUxpdGUpDQoNCmZwYXRoID0gIi9Vc2Vycy9sZWdlbi9EZXNrdG9wL1ByYWN0aWN1bVR3byINCmRiZmlsZSA9ICJQcmFjdGljdW1Ud28uc3FsaXRlIg0KDQpkYmNvbiA8LSBkYkNvbm5lY3QoUlNRTGl0ZTo6U1FMaXRlKCksIHBhc3RlMChmcGF0aCxkYmZpbGUpKQ0KYGBgDQoNCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0NCkRST1AgVEFCTEUgSUYgRVhJU1RTIEF1dGhvcjsNCmBgYA0KDQpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259DQpEUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VuYWw7DQpgYGANCg0KYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQ0KQ1JFQVRFIFRBQkxFIEpvdXJuYWwgKA0KICBJU1NOIFRFWFQgUFJJTUFSWSBLRVksDQogIGlzb2FiYnJldmlhdGlvbiBURVhUIE5PVCBOVUxMLA0KICB0aXRsZSBURVhUIE5PVCBOVUxMDQopOw0KYGBgDQoNCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0NCkNSRUFURSBUQUJMRSBBdXRob3IgKA0KICBhdXRob3JJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLA0KICBsYXN0TmFtZSBURVhULA0KICBmb3JlTmFtZSBURVhULA0KICBpbml0aWFscyBURVhUDQopOw0KYGBgDQoNCkxvYWRpbmcgTGlicmFyaWVzDQoNCmBgYHtyIHdhcm5pbmc9RkFMU0V9DQpsaWJyYXJ5KFhNTCkNCmxpYnJhcnkoREJJKQ0KbGlicmFyeShrbml0cikNCmxpYnJhcnkoc3FsZGYpDQpvcHRpb25zKHNxbGRmLmRyaXZlciA9ICJTUUxpdGUiKQ0Kb3B0aW9ucyh3YXJuPS0xKQ0KYGBgDQoNCmBgYHtyfQ0KcGF0aCA8LSAiL1VzZXJzL2xlZ2VuL0Rlc2t0b3AvUHJhY3RpY3VtVHdvLyINCmZuIDwtICJwdWJtZWRfc2FtcGxlLnhtbCINCmZpbGUgPSBwYXN0ZTAocGF0aCwgZm4pDQp4bWxET00gPC0geG1sUGFyc2UoZmlsZSkNCnIgPC0geG1sUm9vdCh4bWxET00pDQpzaXplIDwtIHhtbFNpemUocikNCmBgYA0KDQojIyAxLkluc3BlY3QgdGhlIHB1Ym1lZCBDYXRhbG9nIFhNTCANCg0KYGBge3Igd2FybmluZyA9IEZBTFNFfQ0KeHBhcnNlIDwtIHhtbFBhcnNlKCJwdWJtZWRfc2FtcGxlLnhtbCIpDQp4cGFyc2UNCmBgYA0KDQojIyAyLkxvYWQgdGhlIHB1Ym1lZCBDYXRhbG9nIFhNTCBkaXJlY3RseSBpbnRvIGEgZGF0YWZyYW1lIHVzaW5nIHhtbFRvRGF0YUZyYW1lLg0KDQpgYGB7cn0NCnhtbGRhdGEgPC0geG1sVG9EYXRhRnJhbWUoInB1Ym1lZF9zYW1wbGUueG1sIikNCnByaW50KHhtbGRhdGEpDQpgYGANCg0KDQoNCg0K</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJhY3RpY3VtX1R3byIKb3V0cHV0OgogIHBkZl9kb2N1bWVudDogZGVmYXVsdAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKLS0tCiMgQ3JlYXRlIGRhdGFiYXNlIHNjaGVtYQojIyBDb25uZWN0IHRvIGRhdGFiYXNlCmBgYHtyfQpsaWJyYXJ5KFJTUUxpdGUpCgpkYkZpbGUgPSAiLi9QcmFjdGljdW0yLnNxbGl0ZSIKCmRiY29uIDwtIGRiQ29ubmVjdChSU1FMaXRlOjpTUUxpdGUoKSwgZGJGaWxlKQpgYGAKCiMjIENyZWF0ZSB0YWJsZSBBdXRob3IKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3I7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpDUkVBVEUgVEFCTEUgQXV0aG9yICgKICBhdXRob3JJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIGxhc3ROYW1lIFRFWFQsCiAgZm9yZU5hbWUgVEVYVCwKICBpbml0aWFscyBURVhUCik7CmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEpvdW5hbApgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259CkRST1AgVEFCTEUgSUYgRVhJU1RTIEpvdXJuYWw7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpDUkVBVEUgVEFCTEUgSm91cm5hbCAoCiAgSVNTTiBURVhUIFBSSU1BUlkgS0VZLAogIHRpdGxlIFRFWFQgTk9UIE5VTEwsCiAgaXNvYWJicmV2aWF0aW9uIFRFWFQgTk9UIE5VTEwsCik7CmBgYAoKCiMgTG9hZGluZyBMaWJyYXJpZXMKCmBgYHtyIHdhcm5pbmc9RkFMU0V9CmxpYnJhcnkoWE1MKQpsaWJyYXJ5KHhzbHQpCiNsaWJyYXJ5KERCSSkKI2xpYnJhcnkoa25pdHIpCiNsaWJyYXJ5KHNxbGRmKQojb3B0aW9ucyhzcWxkZi5kcml2ZXIgPSAiU1FMaXRlIikKI29wdGlvbnMod2Fybj0tMSkKYGBgCgojIExvYWQgWE1MIGRhdGEgdG8gZGF0YWJhc2UKIyMgUmVhZCBYTUwgZmlsZQpgYGB7cn0KeG1sUGF0aCA8LSAiLi9wdWJtZWRfc2FtcGxlLnhtbCIKeG1sRG9jID0gcmVhZF94bWwoeG1sUGF0aCkKYGBgCgojIyBMb2FkIEpvdXJuYWwgdGFibGUKYGBge3J9CiMgRXh0cmFjdCBKb3VybmFsIERhdGEKeHNsUGF0aCA9ICIuL2pvdXJuYWwueHNsIgp4c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9InhzbHQiKQpqb3VybmFsX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpCmpvdXJuYWxzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2Uoam91cm5hbF9yYXcpKSkKZGJXcml0ZVRhYmxlKGRiY29uLG5hbWUgPSAiSm91cm5hbCIsIHZhbHVlID0gam91cm5hbHMsIGFwcGVuZCA9IFRSVUUpCmBgYAoKIyMgTG9hZCBBdXRob3IgdGFibGUKYGBge3J9CiMgRXh0cmFjdCBKb3VybmFsIERhdGEKeHNsUGF0aCA9ICIuL2F1dGhvci54c2wiCnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT0ieHNsdCIpCmF1dGhvcl9yYXcgPSB4bWxfeHNsdCh4bWxEb2MseHNsRG9jKQphdXRob3JzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoYXV0aG9yX3JhdykpKQphdXRob3JzID0gY2JpbmQoYXV0aG9ySWQ9cm93bmFtZXMoYXV0aG9ycyksYXV0aG9ycykKZGJXcml0ZVRhYmxlKGRiY29uLG5hbWUgPSAiQXV0aG9yIiwgdmFsdWUgPSBhdXRob3JzLCBhcHBlbmQgPSBUUlVFKQpgYGAKCgoKCg==</div>
 
 
 

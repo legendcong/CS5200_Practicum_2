@@ -4,30 +4,19 @@ output:
   pdf_document: default
   html_notebook: default
 ---
-
+# Create database schema
+## Connect to database
 ```{r}
 library(RSQLite)
 
-fpath = "/Users/legen/Desktop/PracticumTwo"
-dbfile = "PracticumTwo.sqlite"
+dbFile = "./Practicum2.sqlite"
 
-dbcon <- dbConnect(RSQLite::SQLite(), paste0(fpath,dbfile))
+dbcon <- dbConnect(RSQLite::SQLite(), dbFile)
 ```
 
+## Create table Author
 ```{sql connection=dbcon}
 DROP TABLE IF EXISTS Author;
-```
-
-```{sql connection=dbcon}
-DROP TABLE IF EXISTS Jounal;
-```
-
-```{sql connection=dbcon}
-CREATE TABLE Journal (
-  ISSN TEXT PRIMARY KEY,
-  isoabbreviation TEXT NOT NULL,
-  title TEXT NOT NULL
-);
 ```
 
 ```{sql connection=dbcon}
@@ -39,38 +28,58 @@ CREATE TABLE Author (
 );
 ```
 
-Loading Libraries
+## Create table Jounal
+```{sql connection=dbcon}
+DROP TABLE IF EXISTS Journal;
+```
+
+```{sql connection=dbcon}
+CREATE TABLE Journal (
+  ISSN TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  isoabbreviation TEXT NOT NULL,
+);
+```
+
+
+# Loading Libraries
 
 ```{r warning=FALSE}
 library(XML)
-library(DBI)
-library(knitr)
-library(sqldf)
-options(sqldf.driver = "SQLite")
-options(warn=-1)
+library(xslt)
+#library(DBI)
+#library(knitr)
+#library(sqldf)
+#options(sqldf.driver = "SQLite")
+#options(warn=-1)
 ```
 
+# Load XML data to database
+## Read XML file
 ```{r}
-path <- "/Users/legen/Desktop/PracticumTwo/"
-fn <- "pubmed_sample.xml"
-file = paste0(path, fn)
-xmlDOM <- xmlParse(file)
-r <- xmlRoot(xmlDOM)
-size <- xmlSize(r)
+xmlPath <- "./pubmed_sample.xml"
+xmlDoc = read_xml(xmlPath)
 ```
 
-## 1.Inspect the pubmed Catalog XML 
-
-```{r warning = FALSE}
-xparse <- xmlParse("pubmed_sample.xml")
-xparse
-```
-
-## 2.Load the pubmed Catalog XML directly into a dataframe using xmlToDataFrame.
-
+## Load Journal table
 ```{r}
-xmldata <- xmlToDataFrame("pubmed_sample.xml")
-print(xmldata)
+# Extract Journal Data
+xslPath = "./journal.xsl"
+xslDoc = read_xml(xslPath,package="xslt")
+journal_raw = xml_xslt(xmlDoc,xslDoc)
+journals = unique(xmlToDataFrame(XML::xmlParse(journal_raw)))
+dbWriteTable(dbcon,name = "Journal", value = journals, append = TRUE)
+```
+
+## Load Author table
+```{r}
+# Extract Journal Data
+xslPath = "./author.xsl"
+xslDoc = read_xml(xslPath,package="xslt")
+author_raw = xml_xslt(xmlDoc,xslDoc)
+authors = unique(xmlToDataFrame(XML::xmlParse(author_raw)))
+authors = cbind(authorId=rownames(authors),authors)
+dbWriteTable(dbcon,name = "Author", value = authors, append = TRUE)
 ```
 
 
