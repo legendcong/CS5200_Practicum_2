@@ -28,7 +28,7 @@ CREATE TABLE Author (
 );
 ```
 
-## Create table Jounal
+## Create table Journal
 ```{sql connection=dbcon}
 DROP TABLE IF EXISTS Journal;
 ```
@@ -37,7 +37,23 @@ DROP TABLE IF EXISTS Journal;
 CREATE TABLE Journal (
   ISSN TEXT PRIMARY KEY,
   title TEXT NOT NULL,
-  isoabbreviation TEXT NOT NULL,
+  isoabbreviation TEXT NOT NULL
+);
+```
+
+## Create table JournalIssue
+```{sql connection=dbcon}
+DROP TABLE IF EXISTS JournalIssue;
+```
+
+```{sql connection=dbcon}
+CREATE TABLE JournalIssue (
+  jId INTEGER PRIMARY KEY,
+  ISSN INTEGER REFERENCES Journal(ISSN) ON DELETE CASCADE,
+  volume INTEGER NOT NULL,
+  issue INTEGER NOT NULL,
+  pubYear TEXT NOT NULL,
+  pubMonth TEXT NOT NULL
 );
 ```
 
@@ -73,7 +89,7 @@ dbWriteTable(dbcon,name = "Journal", value = journals, append = TRUE)
 
 ## Load Author table
 ```{r}
-# Extract Journal Data
+# Extract Author Data
 xslPath = "./author.xsl"
 xslDoc = read_xml(xslPath,package="xslt")
 author_raw = xml_xslt(xmlDoc,xslDoc)
@@ -82,6 +98,27 @@ authors = cbind(authorId=rownames(authors),authors)
 dbWriteTable(dbcon,name = "Author", value = authors, append = TRUE)
 ```
 
+## Load JournalIssue table
+```{r}
+# Extract JournalIssue Data
+xslPath = "./journalIssue.xsl"
+xslDoc = read_xml(xslPath,package="xslt")
+journalIssue_raw = xml_xslt(xmlDoc,xslDoc)
+journalIssues = unique(xmlToDataFrame(XML::xmlParse(journalIssue_raw)))
+journalIssues = cbind(jId=rownames(journalIssues),journalIssues)
+medDate <- journalIssues$medlineDate
+for (i in 1 : 19) {
+  if (medDate[i] != '') {
+  pubDate <- strsplit(medDate[i],split = ' ')
+  journalIssues$pubYear[i] = pubDate[[1]][1]
+  journalIssues$pubMonth[i] = pubDate[[1]][2]
+  }
+}
+journalIssues <- subset(journalIssues, select = -c(7))
+dbWriteTable(dbcon,name = "JournalIssue", value = journalIssues, append = TRUE)
+```
 
-
+```{sql connection=dbcon}
+SELECT * FROM JournalIssue;
+```
 
