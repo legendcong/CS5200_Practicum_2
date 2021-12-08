@@ -3,19 +3,25 @@
     <xsl:template match="/PubmedArticleSet">
         <data>
             <xsl:for-each select="PubmedArticle">
-                <Article>                   
-                    <articleId>
-                        <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/AuthorShip/articleId" />
-                    </articleId>   
-                    <pubModel>
-                        <xsl:value-of select="MedlineCitation/Article/pubModel" />
-                    </pubModel>  					
+                <Article>
+                    <pubMode>
+                        <xsl:value-of select="MedlineCitation/Article/@PubModel" />
+                    </pubMode>
                     <title>
-                        <xsl:value-of select="MedlineCitation/Article/title" />
-                    </title>  
+                        <xsl:value-of select="MedlineCitation/Article/ArticleTitle" />
+                    </title>
                     <abstract>
-                        <xsl:value-of select="MedlineCitation/Article/abstract" />
-                    </abstract>                      
+                        <xsl:value-of select="MedlineCitation/Article/Abstract" />
+                    </abstract>
+                    <ISSN>
+                        <xsl:value-of select="MedlineCitation/Article/Journal/ISSN" />
+                    </ISSN>
+                    <volume>
+                        <xsl:value-of select="MedlineCitation/Article/Journal/JournalIssue/Volume" />
+                    </volume>
+                    <issue>
+                        <xsl:value-of select="MedlineCitation/Article/Journal/JournalIssue/Issue" />
+                    </issue>
                 </Article>
             </xsl:for-each>
         </data>

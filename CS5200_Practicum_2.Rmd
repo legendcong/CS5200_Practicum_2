@@ -130,7 +130,7 @@ journalIssue_raw = xml_xslt(xmlDoc,xslDoc)
 journalIssues = unique(xmlToDataFrame(XML::xmlParse(journalIssue_raw)))
 journalIssues = cbind(jId=rownames(journalIssues),journalIssues)
 medDate <- journalIssues$medlineDate
-for (i in 1 : 19) {
+for (i in 1 : nrow(journalIssues)) {
   if (medDate[i] != '') {
   pubDate <- strsplit(medDate[i],split = ' ')
   journalIssues$pubYear[i] = pubDate[[1]][1]
@@ -143,6 +143,27 @@ dbWriteTable(dbcon,name = "JournalIssue", value = journalIssues, append = TRUE)
 
 ```{sql connection=dbcon}
 SELECT * FROM JournalIssue;
+```
+
+## Load Article table
+```{r}
+# Extract Article Data
+xslPath = "./Article.xsl"
+xslDoc = read_xml(xslPath,package="xslt")
+article_raw = xml_xslt(xmlDoc,xslDoc)
+article = unique(xmlToDataFrame(XML::xmlParse(article_raw)))
+rownames(article) <- NULL
+jIds = c()
+for(i in 1:nrow(article)){
+  temp = article[i,]
+  jIds = append(jIds,journalIssues[which(temp$ISSN==journalIssues$ISSN
+                       & temp$volume==journalIssues$volume
+                       & temp$issue == journalIssues$issue),]$jId)
+}
+article = cbind(articleId=rownames(article),jId=jIds,article)
+article = subset(article, select = -c(2))
+article
+#dbWriteTable(dbcon,name = "Article", value = article, append = TRUE)
 ```
 
 ## Load AuthorShip table
@@ -159,16 +180,4 @@ dbWriteTable(dbcon,name = "AuthorShip", value = AuthorShip, append = TRUE)
 
 ```{sql connection=dbcon}
 SELECT * FROM AuthorShip WHERE authorId = articleId;
-```
-
-## Load Article table
-```{r}
-# Extract Article Data
-xslPath = "./Article.xsl"
-xslDoc = read_xml(xslPath,package="xslt")
-article_raw = xml_xslt(xmlDoc,xslDoc)
-article = unique(xmlToDataFrame(XML::xmlParse(article_raw)))
-article = cbind(authorId=rownames(article),article)
-
-dbWriteTable(dbcon,name = "Article", value = article, append = TRUE)
 ```
