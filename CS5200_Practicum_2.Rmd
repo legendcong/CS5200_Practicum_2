@@ -85,6 +85,21 @@ CREATE TABLE Article (
 )
 ```
 
+## Create table History
+```{sql connection=dbcon}
+DROP TABLE IF EXISTS History;
+```
+
+```{sql connection=dbcon}
+CREATE TABLE History (
+  hId INTEGER PRIMARY KEY,
+  articleId INTEGER REFERENCES Article(articleId) ON DELETE CASCADE,
+  pubStatus TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  month INTEGER NOT NULL,
+  day INTEGER NOT NULL
+)
+```
 
 # Loading Libraries
 
@@ -184,4 +199,26 @@ dbWriteTable(dbcon,name = "AuthorShip", value = AuthorShip, append = TRUE)
 
 ```{sql connection=dbcon}
 SELECT * FROM AuthorShip WHERE authorId = articleId;
+```
+
+## Load History table
+```{r}
+# Extract History Data
+xslPath = "./history.xsl"
+xslDoc = read_xml(xslPath,package="xslt")
+history_raw = xml_xslt(xmlDoc,xslDoc)
+history = unique(xmlToDataFrame(XML::xmlParse(history_raw)))
+rownames(history) <- NULL
+articleIds = c()
+for(i in 1:nrow(history)){
+  temp = history[i,]
+  articleIds = append(articleIds,article[which(temp$title==article$title),]$articleId)
+}
+history = cbind(hId=rownames(history),articleId=articleIds,history)
+history = subset(history, select = 1:6)
+dbWriteTable(dbcon,name = "History", value = history, append = TRUE)
+```
+
+```{sql connection=dbcon}
+SELECT * FROM History;
 ```
