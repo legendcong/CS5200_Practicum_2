@@ -161,10 +161,14 @@ for(i in 1:nrow(article)){
                        & temp$issue == journalIssues$issue),]$jId)
 }
 article = cbind(articleId=rownames(article),jId=jIds,article)
-article = subset(article, select = -c(2))
-article
-#dbWriteTable(dbcon,name = "Article", value = article, append = TRUE)
+article = subset(article, select = 1:5)
+dbWriteTable(dbcon,name = "Article", value = article, append = TRUE)
 ```
+
+```{sql connection=dbcon}
+SELECT * FROM Article;
+```
+
 
 ## Load AuthorShip table
 ```{r}
