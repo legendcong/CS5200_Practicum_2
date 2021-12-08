@@ -5,11 +5,14 @@
             <xsl:for-each select="PubmedArticle">
                 <AuthorShip>
                     <authorId>
-                        <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/authorId" />
+                        <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/LastName" />
                     </authorId>                    
                     <articleId>
-                        <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/AuthorShip/articleId" />
-                    </articleId>                       
+                        <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/ForeName" />
+                    </articleId> 
+					<title>
+                        <xsl:value-of select="MedlineCitation/Article/ArticleTitle" />
+                    </title>
                 </AuthorShip>
             </xsl:for-each>
         </data>

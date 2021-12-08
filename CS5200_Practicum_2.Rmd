@@ -187,19 +187,29 @@ SELECT * FROM Article;
 
 ## Load AuthorShip table
 ```{r}
-# Extract AuthorShip Data
+# Extract authorship Data
 xslPath = "./AuthorShip.xsl"
 xslDoc = read_xml(xslPath,package="xslt")
-AuthorShip_raw = xml_xslt(xmlDoc,xslDoc)
-AuthorShip = unique(xmlToDataFrame(XML::xmlParse(AuthorShip_raw)))
-AuthorShip = cbind(authorId=rownames(AuthorShip),AuthorShip)
-
-dbWriteTable(dbcon,name = "AuthorShip", value = AuthorShip, append = TRUE)
+author_raw = xml_xslt(xmlDoc,xslDoc)
+authorship = unique(xmlToDataFrame(XML::xmlParse(article_raw)))
+rownames(authorship) <- NULL
+authorId = c()
+articleId = c()
+for(i in 1:nrow(authorship)){
+  temp = authorship[i,]
+  articleId = append(articleIds, article[which(temp$title==article$title),]$articleId)
+  authorId = append(authorIds,author[which(temp$LastName==author$LastName
+                       & temp$ForeName==author$ForeName),]$authorId)
+}
+authorship = cbind(articleId=rownames(authorship),articleId=articleId,authorship)
+authorship = subset(authorship, select = 1:1)
+dbWriteTable(dbcon,name = "Authorship", value = authorship, append = TRUE)
 ```
 
 ```{sql connection=dbcon}
-SELECT * FROM AuthorShip WHERE authorId = articleId;
+SELECT * FROM AuthorShip;
 ```
+
 
 ## Load History table
 ```{r}
