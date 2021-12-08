@@ -57,17 +57,40 @@ CREATE TABLE JournalIssue (
 );
 ```
 
+## Create table AuthorShip
+```{sql connection=dbcon}
+DROP TABLE IF EXISTS AuthorShip;
+```
+
+```{sql connection=dbcon}
+CREATE TABLE AuthorShip (
+  articleId INTEGER,
+  authorId INTEGER,
+  PRIMARY KEY (articleId, authorId)
+)
+```
+
+## Create table Article
+```{sql connection=dbcon}
+DROP TABLE IF EXISTS Article;
+```
+
+```{sql connection=dbcon}
+CREATE TABLE Article (
+  articleId INTEGER PRIMARY KEY,
+  jId INTEGER REFERENCES JournalIssue(jId) ON DELETE CASCADE,
+  pubMode TEXT NOT NULL,
+  title TEXT NOT NULL,
+  abstract TEXT NOT NULL
+)
+```
+
 
 # Loading Libraries
 
 ```{r warning=FALSE}
 library(XML)
 library(xslt)
-#library(DBI)
-#library(knitr)
-#library(sqldf)
-#options(sqldf.driver = "SQLite")
-#options(warn=-1)
 ```
 
 # Load XML data to database
@@ -122,3 +145,30 @@ dbWriteTable(dbcon,name = "JournalIssue", value = journalIssues, append = TRUE)
 SELECT * FROM JournalIssue;
 ```
 
+## Load AuthorShip table
+```{r}
+# Extract AuthorShip Data
+xslPath = "./AuthorShip.xsl"
+xslDoc = read_xml(xslPath,package="xslt")
+AuthorShip_raw = xml_xslt(xmlDoc,xslDoc)
+AuthorShip = unique(xmlToDataFrame(XML::xmlParse(AuthorShip_raw)))
+AuthorShip = cbind(authorId=rownames(AuthorShip),AuthorShip)
+
+dbWriteTable(dbcon,name = "AuthorShip", value = AuthorShip, append = TRUE)
+```
+
+```{sql connection=dbcon}
+SELECT * FROM AuthorShip WHERE authorId = articleId;
+```
+
+## Load Article table
+```{r}
+# Extract Article Data
+xslPath = "./Article.xsl"
+xslDoc = read_xml(xslPath,package="xslt")
+article_raw = xml_xslt(xmlDoc,xslDoc)
+article = unique(xmlToDataFrame(XML::xmlParse(article_raw)))
+article = cbind(authorId=rownames(article),article)
+
+dbWriteTable(dbcon,name = "Article", value = article, append = TRUE)
+```

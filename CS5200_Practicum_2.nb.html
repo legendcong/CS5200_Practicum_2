@@ -253,8 +253,8 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="create-table-jounal" class="section level2">
-<h2>Create table Jounal</h2>
+<div id="create-table-journal" class="section level2">
+<h2>Create table Journal</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsO1xuYGBgIn0= -->
@@ -264,10 +264,81 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IG5lYXIgXCIpXCI6IHN5bnRheCBlcnJvclxuRmFpbGVkIHRvIGV4ZWN1dGUgU1FMIGNodW5rXG4ifQ== -->
-<pre><code>Error: near &quot;)&quot;: syntax error
-Failed to execute SQL chunk</code></pre>
-<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgSm91cm5hbCAoXG4gIElTU04gVEVYVCBQUklNQVJZIEtFWSxcbiAgdGl0bGUgVEVYVCBOT1QgTlVMTCxcbiAgaXNvYWJicmV2aWF0aW9uIFRFWFQgTk9UIE5VTExcbik7XG5gYGAifQ== -->
+<pre class="sql"><code>CREATE TABLE Journal (
+  ISSN TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  isoabbreviation TEXT NOT NULL
+);</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="create-table-journalissue" class="section level2">
+<h2>Create table JournalIssue</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsSXNzdWU7XG5gYGAifQ== -->
+<pre class="sql"><code>DROP TABLE IF EXISTS JournalIssue;</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgSm91cm5hbElzc3VlIChcbiAgaklkIElOVEVHRVIgUFJJTUFSWSBLRVksXG4gIElTU04gSU5URUdFUiBSRUZFUkVOQ0VTIEpvdXJuYWwoSVNTTikgT04gREVMRVRFIENBU0NBREUsXG4gIHZvbHVtZSBJTlRFR0VSIE5PVCBOVUxMLFxuICBpc3N1ZSBJTlRFR0VSIE5PVCBOVUxMLFxuICBwdWJZZWFyIFRFWFQgTk9UIE5VTEwsXG4gIHB1Yk1vbnRoIFRFWFQgTk9UIE5VTExcbik7XG5gYGAifQ== -->
+<pre class="sql"><code>CREATE TABLE JournalIssue (
+  jId INTEGER PRIMARY KEY,
+  ISSN INTEGER REFERENCES Journal(ISSN) ON DELETE CASCADE,
+  volume INTEGER NOT NULL,
+  issue INTEGER NOT NULL,
+  pubYear TEXT NOT NULL,
+  pubMonth TEXT NOT NULL
+);</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="create-table-authorship" class="section level2">
+<h2>Create table AuthorShip</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3JTaGlwO1xuYGBgIn0= -->
+<pre class="sql"><code>DROP TABLE IF EXISTS AuthorShip;</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgQXV0aG9yU2hpcCAoXG4gIGFydGljbGVJZCBJTlRFR0VSLFxuICBhdXRob3JJZCBJTlRFR0VSLFxuICBQUklNQVJZIEtFWSAoYXJ0aWNsZUlkLCBhdXRob3JJZClcbilcbmBgYCJ9 -->
+<pre class="sql"><code>CREATE TABLE AuthorShip (
+  articleId INTEGER,
+  authorId INTEGER,
+  PRIMARY KEY (articleId, authorId)
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="create-table-article" class="section level2">
+<h2>Create table Article</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBBcnRpY2xlO1xuYGBgIn0= -->
+<pre class="sql"><code>DROP TABLE IF EXISTS Article;</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgQXJ0aWNsZSAoXG4gIGFydGljbGVJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLFxuICBqSWQgSU5URUdFUiBSRUZFUkVOQ0VTIEpvdXJuYWxJc3N1ZShqSWQpIE9OIERFTEVURSBDQVNDQURFLFxuICBwdWJNb2RlIFRFWFQgTk9UIE5VTEwsXG4gIHRpdGxlIFRFWFQgTk9UIE5VTEwsXG4gIGFic3RyYWN0IFRFWFQgTk9UIE5VTExcbilcbmBgYCJ9 -->
+<pre class="sql"><code>CREATE TABLE Article (
+  articleId INTEGER PRIMARY KEY,
+  jId INTEGER REFERENCES JournalIssue(jId) ON DELETE CASCADE,
+  pubMode TEXT NOT NULL,
+  title TEXT NOT NULL,
+  abstract TEXT NOT NULL
+)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -276,14 +347,9 @@ Failed to execute SQL chunk</code></pre>
 <h1>Loading Libraries</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShYTUwpXG5saWJyYXJ5KHhzbHQpXG4jbGlicmFyeShEQkkpXG4jbGlicmFyeShrbml0cilcbiNsaWJyYXJ5KHNxbGRmKVxuI29wdGlvbnMoc3FsZGYuZHJpdmVyID0gXCJTUUxpdGVcIilcbiNvcHRpb25zKHdhcm49LTEpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShYTUwpXG5saWJyYXJ5KHhzbHQpXG5gYGAifQ== -->
 <pre class="r"><code>library(XML)
-library(xslt)
-#library(DBI)
-#library(knitr)
-#library(sqldf)
-#options(sqldf.driver = &quot;SQLite&quot;)
-#options(warn=-1)</code></pre>
+library(xslt)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -313,6 +379,9 @@ journal_raw = xml_xslt(xmlDoc,xslDoc)
 journals = unique(xmlToDataFrame(XML::xmlParse(journal_raw)))
 dbWriteTable(dbcon,name = &quot;Journal&quot;, value = journals, append = TRUE)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IGV4dGVybmFsIHBvaW50ZXIgaXMgbm90IHZhbGlkXG4ifQ== -->
+<pre><code>Error: external pointer is not valid</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -320,22 +389,106 @@ dbWriteTable(dbcon,name = &quot;Journal&quot;, value = journals, append = TRUE)<
 <h2>Load Author table</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeHRyYWN0IEpvdXJuYWwgRGF0YVxueHNsUGF0aCA9IFwiLi9hdXRob3IueHNsXCJcbnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT1cInhzbHRcIilcbmF1dGhvcl9yYXcgPSB4bWxfeHNsdCh4bWxEb2MseHNsRG9jKVxuYXV0aG9ycyA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGF1dGhvcl9yYXcpKSlcbiNhdXRob3JzID0gY2JpbmQoYXV0aG9ySWQ9cm93bmFtZXMoYXV0aG9ycyksYXV0aG9ycylcbiNkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9IFwiQXV0aG9yXCIsIHZhbHVlID0gYXV0aG9ycywgYXBwZW5kID0gVFJVRSlcbmBgYCJ9 -->
-<pre class="r"><code># Extract Journal Data
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeHRyYWN0IEF1dGhvciBEYXRhXG54c2xQYXRoID0gXCIuL2F1dGhvci54c2xcIlxueHNsRG9jID0gcmVhZF94bWwoeHNsUGF0aCxwYWNrYWdlPVwieHNsdFwiKVxuYXV0aG9yX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpXG5hdXRob3JzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoYXV0aG9yX3JhdykpKVxuYXV0aG9ycyA9IGNiaW5kKGF1dGhvcklkPXJvd25hbWVzKGF1dGhvcnMpLGF1dGhvcnMpXG5kYldyaXRlVGFibGUoZGJjb24sbmFtZSA9IFwiQXV0aG9yXCIsIHZhbHVlID0gYXV0aG9ycywgYXBwZW5kID0gVFJVRSlcbmBgYCJ9 -->
+<pre class="r"><code># Extract Author Data
 xslPath = &quot;./author.xsl&quot;
 xslDoc = read_xml(xslPath,package=&quot;xslt&quot;)
 author_raw = xml_xslt(xmlDoc,xslDoc)
 authors = unique(xmlToDataFrame(XML::xmlParse(author_raw)))
-#authors = cbind(authorId=rownames(authors),authors)
-#dbWriteTable(dbcon,name = &quot;Author&quot;, value = authors, append = TRUE)</code></pre>
+authors = cbind(authorId=rownames(authors),authors)
+dbWriteTable(dbcon,name = &quot;Author&quot;, value = authors, append = TRUE)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IGV4dGVybmFsIHBvaW50ZXIgaXMgbm90IHZhbGlkXG4ifQ== -->
+<pre><code>Error: external pointer is not valid</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="load-journalissue-table" class="section level2">
+<h2>Load JournalIssue table</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeHRyYWN0IEpvdXJuYWxJc3N1ZSBEYXRhXG54c2xQYXRoID0gXCIuL2pvdXJuYWxJc3N1ZS54c2xcIlxueHNsRG9jID0gcmVhZF94bWwoeHNsUGF0aCxwYWNrYWdlPVwieHNsdFwiKVxuam91cm5hbElzc3VlX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpXG5qb3VybmFsSXNzdWVzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2Uoam91cm5hbElzc3VlX3JhdykpKVxuam91cm5hbElzc3VlcyA9IGNiaW5kKGpJZD1yb3duYW1lcyhqb3VybmFsSXNzdWVzKSxqb3VybmFsSXNzdWVzKVxubWVkRGF0ZSA8LSBqb3VybmFsSXNzdWVzJG1lZGxpbmVEYXRlXG5mb3IgKGkgaW4gMSA6IDE5KSB7XG4gIGlmIChtZWREYXRlW2ldICE9ICcnKSB7XG4gIHB1YkRhdGUgPC0gc3Ryc3BsaXQobWVkRGF0ZVtpXSxzcGxpdCA9ICcgJylcbiAgam91cm5hbElzc3VlcyRwdWJZZWFyW2ldID0gcHViRGF0ZVtbMV1dWzFdXG4gIGpvdXJuYWxJc3N1ZXMkcHViTW9udGhbaV0gPSBwdWJEYXRlW1sxXV1bMl1cbiAgfVxufVxuam91cm5hbElzc3VlcyA8LSBzdWJzZXQoam91cm5hbElzc3Vlcywgc2VsZWN0ID0gLWMoNykpXG5kYldyaXRlVGFibGUoZGJjb24sbmFtZSA9IFwiSm91cm5hbElzc3VlXCIsIHZhbHVlID0gam91cm5hbElzc3VlcywgYXBwZW5kID0gVFJVRSlcbmBgYCJ9 -->
+<pre class="r"><code># Extract JournalIssue Data
+xslPath = &quot;./journalIssue.xsl&quot;
+xslDoc = read_xml(xslPath,package=&quot;xslt&quot;)
+journalIssue_raw = xml_xslt(xmlDoc,xslDoc)
+journalIssues = unique(xmlToDataFrame(XML::xmlParse(journalIssue_raw)))
+journalIssues = cbind(jId=rownames(journalIssues),journalIssues)
+medDate &lt;- journalIssues$medlineDate
+for (i in 1 : 19) {
+  if (medDate[i] != &#39;&#39;) {
+  pubDate &lt;- strsplit(medDate[i],split = &#39; &#39;)
+  journalIssues$pubYear[i] = pubDate[[1]][1]
+  journalIssues$pubMonth[i] = pubDate[[1]][2]
+  }
+}
+journalIssues &lt;- subset(journalIssues, select = -c(7))
+dbWriteTable(dbcon,name = &quot;JournalIssue&quot;, value = journalIssues, append = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IGV4dGVybmFsIHBvaW50ZXIgaXMgbm90IHZhbGlkXG4ifQ== -->
+<pre><code>Error: external pointer is not valid</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IGV4dGVybmFsIHBvaW50ZXIgaXMgbm90IHZhbGlkXG5GYWlsZWQgdG8gZXhlY3V0ZSBTUUwgY2h1bmtcbiJ9 -->
+<pre><code>Error: external pointer is not valid
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="load-authorship-table" class="section level2">
+<h2>Load AuthorShip table</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeHRyYWN0IEF1dGhvclNoaXAgRGF0YVxueHNsUGF0aCA9IFwiLi9BdXRob3JTaGlwLnhzbFwiXG54c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9XCJ4c2x0XCIpXG5BdXRob3JTaGlwX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpXG5BdXRob3JTaGlwID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoQXV0aG9yU2hpcF9yYXcpKSlcbkF1dGhvclNoaXAgPSBjYmluZChhdXRob3JJZD1yb3duYW1lcyhBdXRob3JTaGlwKSxBdXRob3JTaGlwKVxuXG5kYldyaXRlVGFibGUoZGJjb24sbmFtZSA9IFwiQXV0aG9yU2hpcFwiLCB2YWx1ZSA9IEF1dGhvclNoaXAsIGFwcGVuZCA9IFRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code># Extract AuthorShip Data
+xslPath = &quot;./AuthorShip.xsl&quot;
+xslDoc = read_xml(xslPath,package=&quot;xslt&quot;)
+AuthorShip_raw = xml_xslt(xmlDoc,xslDoc)
+AuthorShip = unique(xmlToDataFrame(XML::xmlParse(AuthorShip_raw)))
+AuthorShip = cbind(authorId=rownames(AuthorShip),AuthorShip)
+
+dbWriteTable(dbcon,name = &quot;AuthorShip&quot;, value = AuthorShip, append = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IGV4dGVybmFsIHBvaW50ZXIgaXMgbm90IHZhbGlkXG4ifQ== -->
+<pre><code>Error: external pointer is not valid</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEF1dGhvclNoaXAgV0hFUkUgYXV0aG9ySWQgPSBhcnRpY2xlSWQ7XG5gYGAifQ== -->
+<pre class="sql"><code>SELECT * FROM AuthorShip WHERE authorId = articleId;</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="load-article-table" class="section level2">
+<h2>Load Article table</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeHRyYWN0IEFydGljbGUgRGF0YVxueHNsUGF0aCA9IFwiLi9BcnRpY2xlLnhzbFwiXG54c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9XCJ4c2x0XCIpXG5hcnRpY2xlX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpXG5hcnRpY2xlID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoYXJ0aWNsZV9yYXcpKSlcbmFydGljbGUgPSBjYmluZChhdXRob3JJZD1yb3duYW1lcyhhcnRpY2xlKSxhcnRpY2xlKVxuXG5kYldyaXRlVGFibGUoZGJjb24sbmFtZSA9IFwiQXJ0aWNsZVwiLCB2YWx1ZSA9IGFydGljbGUsIGFwcGVuZCA9IFRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code># Extract Article Data
+xslPath = &quot;./Article.xsl&quot;
+xslDoc = read_xml(xslPath,package=&quot;xslt&quot;)
+article_raw = xml_xslt(xmlDoc,xslDoc)
+article = unique(xmlToDataFrame(XML::xmlParse(article_raw)))
+article = cbind(authorId=rownames(article),article)
+
+dbWriteTable(dbcon,name = &quot;Article&quot;, value = article, append = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IGV4dGVybmFsIHBvaW50ZXIgaXMgbm90IHZhbGlkXG4ifQ== -->
+<pre><code>Error: external pointer is not valid</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJhY3RpY3VtX1R3byIKb3V0cHV0OgogIHBkZl9kb2N1bWVudDogZGVmYXVsdAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKLS0tCiMgQ3JlYXRlIGRhdGFiYXNlIHNjaGVtYQojIyBDb25uZWN0IHRvIGRhdGFiYXNlCmBgYHtyfQpsaWJyYXJ5KFJTUUxpdGUpCgpkYkZpbGUgPSAiLi9QcmFjdGljdW0yLnNxbGl0ZSIKCmRiY29uIDwtIGRiQ29ubmVjdChSU1FMaXRlOjpTUUxpdGUoKSwgZGJGaWxlKQpgYGAKCiMjIENyZWF0ZSB0YWJsZSBBdXRob3IKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3I7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpDUkVBVEUgVEFCTEUgQXV0aG9yICgKICBhdXRob3JJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIGxhc3ROYW1lIFRFWFQsCiAgZm9yZU5hbWUgVEVYVCwKICBpbml0aWFscyBURVhUCik7CmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEpvdW5hbApgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259CkRST1AgVEFCTEUgSUYgRVhJU1RTIEpvdXJuYWw7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpDUkVBVEUgVEFCTEUgSm91cm5hbCAoCiAgSVNTTiBURVhUIFBSSU1BUlkgS0VZLAogIHRpdGxlIFRFWFQgTk9UIE5VTEwsCiAgaXNvYWJicmV2aWF0aW9uIFRFWFQgTk9UIE5VTEwsCik7CmBgYAoKCiMgTG9hZGluZyBMaWJyYXJpZXMKCmBgYHtyIHdhcm5pbmc9RkFMU0V9CmxpYnJhcnkoWE1MKQpsaWJyYXJ5KHhzbHQpCiNsaWJyYXJ5KERCSSkKI2xpYnJhcnkoa25pdHIpCiNsaWJyYXJ5KHNxbGRmKQojb3B0aW9ucyhzcWxkZi5kcml2ZXIgPSAiU1FMaXRlIikKI29wdGlvbnMod2Fybj0tMSkKYGBgCgojIExvYWQgWE1MIGRhdGEgdG8gZGF0YWJhc2UKIyMgUmVhZCBYTUwgZmlsZQpgYGB7cn0KeG1sUGF0aCA8LSAiLi9wdWJtZWRfc2FtcGxlLnhtbCIKeG1sRG9jID0gcmVhZF94bWwoeG1sUGF0aCkKYGBgCgojIyBMb2FkIEpvdXJuYWwgdGFibGUKYGBge3J9CiMgRXh0cmFjdCBKb3VybmFsIERhdGEKeHNsUGF0aCA9ICIuL2pvdXJuYWwueHNsIgp4c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9InhzbHQiKQpqb3VybmFsX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpCmpvdXJuYWxzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2Uoam91cm5hbF9yYXcpKSkKZGJXcml0ZVRhYmxlKGRiY29uLG5hbWUgPSAiSm91cm5hbCIsIHZhbHVlID0gam91cm5hbHMsIGFwcGVuZCA9IFRSVUUpCmBgYAoKIyMgTG9hZCBBdXRob3IgdGFibGUKYGBge3J9CiMgRXh0cmFjdCBKb3VybmFsIERhdGEKeHNsUGF0aCA9ICIuL2F1dGhvci54c2wiCnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT0ieHNsdCIpCmF1dGhvcl9yYXcgPSB4bWxfeHNsdCh4bWxEb2MseHNsRG9jKQphdXRob3JzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoYXV0aG9yX3JhdykpKQphdXRob3JzID0gY2JpbmQoYXV0aG9ySWQ9cm93bmFtZXMoYXV0aG9ycyksYXV0aG9ycykKZGJXcml0ZVRhYmxlKGRiY29uLG5hbWUgPSAiQXV0aG9yIiwgdmFsdWUgPSBhdXRob3JzLCBhcHBlbmQgPSBUUlVFKQpgYGAKCgoKCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlByYWN0aWN1bV9Ud28iDQpvdXRwdXQ6DQogIHBkZl9kb2N1bWVudDogZGVmYXVsdA0KICBodG1sX25vdGVib29rOiBkZWZhdWx0DQotLS0NCiMgQ3JlYXRlIGRhdGFiYXNlIHNjaGVtYQ0KIyMgQ29ubmVjdCB0byBkYXRhYmFzZQ0KYGBge3J9DQpsaWJyYXJ5KFJTUUxpdGUpDQoNCmRiRmlsZSA9ICIuL1ByYWN0aWN1bTIuc3FsaXRlIg0KDQpkYmNvbiA8LSBkYkNvbm5lY3QoUlNRTGl0ZTo6U1FMaXRlKCksIGRiRmlsZSkNCmBgYA0KDQojIyBDcmVhdGUgdGFibGUgQXV0aG9yDQpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259DQpEUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3I7DQpgYGANCg0KYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQ0KQ1JFQVRFIFRBQkxFIEF1dGhvciAoDQogIGF1dGhvcklkIElOVEVHRVIgUFJJTUFSWSBLRVksDQogIGxhc3ROYW1lIFRFWFQsDQogIGZvcmVOYW1lIFRFWFQsDQogIGluaXRpYWxzIFRFWFQNCik7DQpgYGANCg0KIyMgQ3JlYXRlIHRhYmxlIEpvdXJuYWwNCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0NCkRST1AgVEFCTEUgSUYgRVhJU1RTIEpvdXJuYWw7DQpgYGANCg0KYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQ0KQ1JFQVRFIFRBQkxFIEpvdXJuYWwgKA0KICBJU1NOIFRFWFQgUFJJTUFSWSBLRVksDQogIHRpdGxlIFRFWFQgTk9UIE5VTEwsDQogIGlzb2FiYnJldmlhdGlvbiBURVhUIE5PVCBOVUxMDQopOw0KYGBgDQoNCiMjIENyZWF0ZSB0YWJsZSBKb3VybmFsSXNzdWUNCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0NCkRST1AgVEFCTEUgSUYgRVhJU1RTIEpvdXJuYWxJc3N1ZTsNCmBgYA0KDQpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259DQpDUkVBVEUgVEFCTEUgSm91cm5hbElzc3VlICgNCiAgaklkIElOVEVHRVIgUFJJTUFSWSBLRVksDQogIElTU04gSU5URUdFUiBSRUZFUkVOQ0VTIEpvdXJuYWwoSVNTTikgT04gREVMRVRFIENBU0NBREUsDQogIHZvbHVtZSBJTlRFR0VSIE5PVCBOVUxMLA0KICBpc3N1ZSBJTlRFR0VSIE5PVCBOVUxMLA0KICBwdWJZZWFyIFRFWFQgTk9UIE5VTEwsDQogIHB1Yk1vbnRoIFRFWFQgTk9UIE5VTEwNCik7DQpgYGANCg0KIyMgQ3JlYXRlIHRhYmxlIEF1dGhvclNoaXANCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0NCkRST1AgVEFCTEUgSUYgRVhJU1RTIEF1dGhvclNoaXA7DQpgYGANCg0KYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQ0KQ1JFQVRFIFRBQkxFIEF1dGhvclNoaXAgKA0KICBhcnRpY2xlSWQgSU5URUdFUiwNCiAgYXV0aG9ySWQgSU5URUdFUiwNCiAgUFJJTUFSWSBLRVkgKGFydGljbGVJZCwgYXV0aG9ySWQpDQopDQpgYGANCg0KIyMgQ3JlYXRlIHRhYmxlIEFydGljbGUNCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0NCkRST1AgVEFCTEUgSUYgRVhJU1RTIEFydGljbGU7DQpgYGANCg0KYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQ0KQ1JFQVRFIFRBQkxFIEFydGljbGUgKA0KICBhcnRpY2xlSWQgSU5URUdFUiBQUklNQVJZIEtFWSwNCiAgaklkIElOVEVHRVIgUkVGRVJFTkNFUyBKb3VybmFsSXNzdWUoaklkKSBPTiBERUxFVEUgQ0FTQ0FERSwNCiAgcHViTW9kZSBURVhUIE5PVCBOVUxMLA0KICB0aXRsZSBURVhUIE5PVCBOVUxMLA0KICBhYnN0cmFjdCBURVhUIE5PVCBOVUxMDQopDQpgYGANCg0KDQojIExvYWRpbmcgTGlicmFyaWVzDQoNCmBgYHtyIHdhcm5pbmc9RkFMU0V9DQpsaWJyYXJ5KFhNTCkNCmxpYnJhcnkoeHNsdCkNCmBgYA0KDQojIExvYWQgWE1MIGRhdGEgdG8gZGF0YWJhc2UNCiMjIFJlYWQgWE1MIGZpbGUNCmBgYHtyfQ0KeG1sUGF0aCA8LSAiLi9wdWJtZWRfc2FtcGxlLnhtbCINCnhtbERvYyA9IHJlYWRfeG1sKHhtbFBhdGgpDQpgYGANCg0KIyMgTG9hZCBKb3VybmFsIHRhYmxlDQpgYGB7cn0NCiMgRXh0cmFjdCBKb3VybmFsIERhdGENCnhzbFBhdGggPSAiLi9qb3VybmFsLnhzbCINCnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT0ieHNsdCIpDQpqb3VybmFsX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpDQpqb3VybmFscyA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGpvdXJuYWxfcmF3KSkpDQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJKb3VybmFsIiwgdmFsdWUgPSBqb3VybmFscywgYXBwZW5kID0gVFJVRSkNCmBgYA0KDQojIyBMb2FkIEF1dGhvciB0YWJsZQ0KYGBge3J9DQojIEV4dHJhY3QgQXV0aG9yIERhdGENCnhzbFBhdGggPSAiLi9hdXRob3IueHNsIg0KeHNsRG9jID0gcmVhZF94bWwoeHNsUGF0aCxwYWNrYWdlPSJ4c2x0IikNCmF1dGhvcl9yYXcgPSB4bWxfeHNsdCh4bWxEb2MseHNsRG9jKQ0KYXV0aG9ycyA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGF1dGhvcl9yYXcpKSkNCmF1dGhvcnMgPSBjYmluZChhdXRob3JJZD1yb3duYW1lcyhhdXRob3JzKSxhdXRob3JzKQ0KZGJXcml0ZVRhYmxlKGRiY29uLG5hbWUgPSAiQXV0aG9yIiwgdmFsdWUgPSBhdXRob3JzLCBhcHBlbmQgPSBUUlVFKQ0KYGBgDQoNCiMjIExvYWQgSm91cm5hbElzc3VlIHRhYmxlDQpgYGB7cn0NCiMgRXh0cmFjdCBKb3VybmFsSXNzdWUgRGF0YQ0KeHNsUGF0aCA9ICIuL2pvdXJuYWxJc3N1ZS54c2wiDQp4c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9InhzbHQiKQ0Kam91cm5hbElzc3VlX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpDQpqb3VybmFsSXNzdWVzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2Uoam91cm5hbElzc3VlX3JhdykpKQ0Kam91cm5hbElzc3VlcyA9IGNiaW5kKGpJZD1yb3duYW1lcyhqb3VybmFsSXNzdWVzKSxqb3VybmFsSXNzdWVzKQ0KbWVkRGF0ZSA8LSBqb3VybmFsSXNzdWVzJG1lZGxpbmVEYXRlDQpmb3IgKGkgaW4gMSA6IDE5KSB7DQogIGlmIChtZWREYXRlW2ldICE9ICcnKSB7DQogIHB1YkRhdGUgPC0gc3Ryc3BsaXQobWVkRGF0ZVtpXSxzcGxpdCA9ICcgJykNCiAgam91cm5hbElzc3VlcyRwdWJZZWFyW2ldID0gcHViRGF0ZVtbMV1dWzFdDQogIGpvdXJuYWxJc3N1ZXMkcHViTW9udGhbaV0gPSBwdWJEYXRlW1sxXV1bMl0NCiAgfQ0KfQ0Kam91cm5hbElzc3VlcyA8LSBzdWJzZXQoam91cm5hbElzc3Vlcywgc2VsZWN0ID0gLWMoNykpDQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJKb3VybmFsSXNzdWUiLCB2YWx1ZSA9IGpvdXJuYWxJc3N1ZXMsIGFwcGVuZCA9IFRSVUUpDQpgYGANCg0KYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQ0KU0VMRUNUICogRlJPTSBKb3VybmFsSXNzdWU7DQpgYGANCg0KIyMgTG9hZCBBdXRob3JTaGlwIHRhYmxlDQpgYGB7cn0NCiMgRXh0cmFjdCBBdXRob3JTaGlwIERhdGENCnhzbFBhdGggPSAiLi9BdXRob3JTaGlwLnhzbCINCnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT0ieHNsdCIpDQpBdXRob3JTaGlwX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpDQpBdXRob3JTaGlwID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoQXV0aG9yU2hpcF9yYXcpKSkNCkF1dGhvclNoaXAgPSBjYmluZChhdXRob3JJZD1yb3duYW1lcyhBdXRob3JTaGlwKSxBdXRob3JTaGlwKQ0KDQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJBdXRob3JTaGlwIiwgdmFsdWUgPSBBdXRob3JTaGlwLCBhcHBlbmQgPSBUUlVFKQ0KYGBgDQoNCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0NClNFTEVDVCAqIEZST00gQXV0aG9yU2hpcCBXSEVSRSBhdXRob3JJZCA9IGFydGljbGVJZDsNCmBgYA0KDQojIyBMb2FkIEFydGljbGUgdGFibGUNCmBgYHtyfQ0KIyBFeHRyYWN0IEFydGljbGUgRGF0YQ0KeHNsUGF0aCA9ICIuL0FydGljbGUueHNsIg0KeHNsRG9jID0gcmVhZF94bWwoeHNsUGF0aCxwYWNrYWdlPSJ4c2x0IikNCmFydGljbGVfcmF3ID0geG1sX3hzbHQoeG1sRG9jLHhzbERvYykNCmFydGljbGUgPSB1bmlxdWUoeG1sVG9EYXRhRnJhbWUoWE1MOjp4bWxQYXJzZShhcnRpY2xlX3JhdykpKQ0KYXJ0aWNsZSA9IGNiaW5kKGF1dGhvcklkPXJvd25hbWVzKGFydGljbGUpLGFydGljbGUpDQoNCmRiV3JpdGVUYWJsZShkYmNvbixuYW1lID0gIkFydGljbGUiLCB2YWx1ZSA9IGFydGljbGUsIGFwcGVuZCA9IFRSVUUpDQpgYGANCg==</div>
 
 
 
