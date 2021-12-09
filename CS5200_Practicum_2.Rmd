@@ -235,3 +235,8 @@ dbWriteTable(dbcon,name = "History", value = history, append = TRUE)
 ```{sql connection=dbcon}
 SELECT * FROM History;
 ```
+
+```{r}
+dbDisconnect(dbcon)
+```
+

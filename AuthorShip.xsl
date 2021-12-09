@@ -3,17 +3,19 @@
     <xsl:template match="/PubmedArticleSet">
         <data>
             <xsl:for-each select="PubmedArticle">
-                <AuthorShip>
-                    <LastName>
-                        <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/LastName" />
-                    </LastName>
-                    <ForeName>
-                        <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/ForeName" />
-                    </ForeName>
-                    <title>
-                        <xsl:value-of select="MedlineCitation/Article/ArticleTitle" />
-                    </title>
-                </AuthorShip>
+                <xsl:for-each select="MedlineCitation/Article/AuthorList/Author">
+                    <AuthorShip>
+                        <LastName>
+                            <xsl:value-of select="LastName" />
+                        </LastName>
+                        <ForeName>
+                            <xsl:value-of select="ForeName" />
+                        </ForeName>
+                        <title>
+                            <xsl:value-of select="../../ArticleTitle" />
+                        </title>
+                    </AuthorShip>
+                </xsl:for-each>
             </xsl:for-each>
         </data>
     </xsl:template>
