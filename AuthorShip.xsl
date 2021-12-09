@@ -4,13 +4,13 @@
         <data>
             <xsl:for-each select="PubmedArticle">
                 <AuthorShip>
-                    <authorId>
+                    <LastName>
                         <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/LastName" />
-                    </authorId>                    
-                    <articleId>
+                    </LastName>
+                    <ForeName>
                         <xsl:value-of select="MedlineCitation/Article/AuthorList/Author/ForeName" />
-                    </articleId> 
-					<title>
+                    </ForeName>
+                    <title>
                         <xsl:value-of select="MedlineCitation/Article/ArticleTitle" />
                     </title>
                 </AuthorShip>

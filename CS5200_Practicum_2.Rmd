@@ -136,6 +136,9 @@ authors = cbind(authorId=rownames(authors),authors)
 dbWriteTable(dbcon,name = "Author", value = authors, append = TRUE)
 ```
 
+```{sql connection=dbcon}
+SELECT * FROM Author;
+```
 ## Load JournalIssue table
 ```{r}
 # Extract JournalIssue Data
@@ -190,19 +193,19 @@ SELECT * FROM Article;
 # Extract authorship Data
 xslPath = "./AuthorShip.xsl"
 xslDoc = read_xml(xslPath,package="xslt")
-author_raw = xml_xslt(xmlDoc,xslDoc)
-authorship = unique(xmlToDataFrame(XML::xmlParse(article_raw)))
+authorship_raw = xml_xslt(xmlDoc,xslDoc)
+authorship = unique(xmlToDataFrame(XML::xmlParse(authorship_raw)))
 rownames(authorship) <- NULL
-authorId = c()
-articleId = c()
+authorIds = c()
+articleIds = c()
 for(i in 1:nrow(authorship)){
   temp = authorship[i,]
-  articleId = append(articleIds, article[which(temp$title==article$title),]$articleId)
-  authorId = append(authorIds,author[which(temp$LastName==author$LastName
-                       & temp$ForeName==author$ForeName),]$authorId)
+  articleIds = append(articleIds, article[which(temp$title==article$title),]$articleId)
+  authorIds = append(authorIds,authors[which(temp$LastName==authors$lastName
+                       & temp$ForeName==authors$foreName),]$authorId)
 }
-authorship = cbind(articleId=rownames(authorship),articleId=articleId,authorship)
-authorship = subset(authorship, select = 1:1)
+authorship = cbind(articleId=articleIds,authorId=authorIds,authorship)
+authorship = subset(authorship, select = 1:2)
 dbWriteTable(dbcon,name = "Authorship", value = authorship, append = TRUE)
 ```
 
