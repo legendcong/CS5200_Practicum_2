@@ -3,23 +3,25 @@
     <xsl:template match="/PubmedArticleSet">
         <data>
             <xsl:for-each select="PubmedArticle">
-                <History>
-                    <pubStatus>
-                        <xsl:value-of select="PubmedData/PublicationStatus" />
-                    </pubStatus>
-                    <year>
-                        <xsl:value-of select="PubmedData/History/PubMedPubDate/Year" />
-                    </year>
-                    <month>
-                        <xsl:value-of select="PubmedData/History/PubMedPubDate/Month" />
-                    </month>
-                    <day>
-                        <xsl:value-of select="PubmedData/History/PubMedPubDate/Day" />
-                    </day>
-                    <title>
-                        <xsl:value-of select="MedlineCitation/Article/ArticleTitle" />
-                    </title>
-                </History>
+                <xsl:for-each select="PubmedData/History/PubMedPubDate">
+                    <History>
+                        <pubStatus>
+                            <xsl:value-of select="@PubStatus" />
+                        </pubStatus>
+                        <year>
+                            <xsl:value-of select="Year" />
+                        </year>
+                        <month>
+                            <xsl:value-of select="Month" />
+                        </month>
+                        <day>
+                            <xsl:value-of select="Day" />
+                        </day>
+                        <title>
+                            <xsl:value-of select="../../../MedlineCitation/Article/ArticleTitle" />
+                        </title>
+                    </History>
+                </xsl:for-each>
             </xsl:for-each>
         </data>
     </xsl:template>
