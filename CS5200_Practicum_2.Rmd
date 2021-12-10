@@ -220,23 +220,116 @@ SELECT * FROM AuthorShip;
 xslPath = "./history.xsl"
 xslDoc = read_xml(xslPath,package="xslt")
 history_raw = xml_xslt(xmlDoc,xslDoc)
-history = unique(xmlToDataFrame(XML::xmlParse(history_raw)))
-rownames(history) <- NULL
+historys = unique(xmlToDataFrame(XML::xmlParse(history_raw)))
+rownames(historys) <- NULL
 articleIds = c()
-for(i in 1:nrow(history)){
-  temp = history[i,]
+for(i in 1:nrow(historys)){
+  temp = historys[i,]
   articleIds = append(articleIds,article[which(temp$title==article$title),]$articleId)
 }
-history = cbind(hId=rownames(history),articleId=articleIds,history)
-history = subset(history, select = 1:6)
-dbWriteTable(dbcon,name = "History", value = history, append = TRUE)
+historys = cbind(hId=rownames(historys),articleId=articleIds,historys)
+historys = subset(historys, select = 1:6)
+dbWriteTable(dbcon,name = "History", value = historys, append = TRUE)
 ```
 
 ```{sql connection=dbcon}
 SELECT * FROM History;
 ```
 
+**q2**
+
+```{r}
+sqlCmd <- "SELECT j.ISSN AS ISSN, j.title AS title, ji.volume AS volume, 
+            ji.issue AS issue, ji.pubYear As pubYear, ji.pubMonth As pubMonth
+            FROM Journal AS j
+            JOIN JournalIssue AS ji ON j.ISSN = ji.ISSN"
+journal = dbGetQuery(dbcon, sqlCmd)
+```
+
+```{r}
+sqlCmd <- "SELECT authorID, lastName, foreName
+            FROM Author"
+author = dbGetQuery(dbcon, sqlCmd)
+```
+
+```{r}
+sqlCmd <- "SELECT hId, pubStatus, year, month, day
+            FROM History"
+history = dbGetQuery(dbcon, sqlCmd)
+```
+
+```{r}
+library(RSQLite)
+
+dbFile = "./Practicum2_Part2.sqlite"
+
+dbcon1 <- dbConnect(RSQLite::SQLite(), dbFile)
+```
+
+## Create table Journals
+```{sql connection=dbcon1}
+DROP TABLE IF EXISTS Journals;
+```
+
+```{sql connection=dbcon1}
+CREATE TABLE Journals (
+  ISSN TEXT PRIMARY KEY,
+  volume INTEGER NOT NULL,
+  issue INTEGER NOT NULL,
+  pubYear TEXT NOT NULL,
+  pubMonth TEXT NOT NULL,
+  title TEXT NOT NULL
+);
+```
+
+## Create table Author
+```{sql connection=dbcon1}
+DROP TABLE IF EXISTS Authors;
+```
+
+```{sql connection=dbcon1}
+CREATE TABLE Authors (
+  authorId INTEGER PRIMARY KEY,
+  lastName TEXT,
+  foreName TEXT
+);
+```
+
+## Create table History
+```{sql connection=dbcon1}
+DROP TABLE IF EXISTS Historys;
+```
+
+```{sql connection=dbcon1}
+CREATE TABLE Historys (
+  hId INTEGER PRIMARY KEY,
+  pubStatus TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  month INTEGER NOT NULL,
+  day INTEGER NOT NULL
+)
+```
+
+```{r}
+dbWriteTable(dbcon1, "Journals", journal, overwrite = T, row.names = F)
+dbWriteTable(dbcon1, "Authors", author, overwrite = T, row.names = F)
+dbWriteTable(dbcon1, "Historys", history, overwrite = T, row.names = F)
+```
+
+```{sql connection=dbcon1}
+SELECT * FROM Journals
+```
+
+```{sql connection=dbcon1}
+SELECT * FROM Authors
+```
+
+```{sql connection=dbcon1}
+SELECT * FROM Historys
+```
+
 ```{r}
 dbDisconnect(dbcon)
+dbDisconnect(dbcon1)
 ```
 
