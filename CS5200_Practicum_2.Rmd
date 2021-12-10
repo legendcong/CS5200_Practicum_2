@@ -349,6 +349,7 @@ CREATE TABLE ArticleFact (
 dbWriteTable(dbcon1, "Journals", journal, overwrite = T, row.names = F)
 dbWriteTable(dbcon1, "Authors", author, overwrite = T, row.names = F)
 dbWriteTable(dbcon1, "Historys", history, overwrite = T, row.names = F)
+dbWriteTable(dbcon1, "ArticleFact", temp, overwrite = T, row.names = F)
 ```
 
 ```{sql connection=dbcon1}
@@ -361,6 +362,10 @@ SELECT * FROM Authors
 
 ```{sql connection=dbcon1}
 SELECT * FROM Historys
+```
+
+```{sql connection=dbcon1}
+SELECT * FROM ArticleFact
 ```
 
 ```{r}

@@ -235,10 +235,21 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table Author</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3I7XG5gYGAifQ== -->
+<pre class="sql"><code>DROP TABLE IF EXISTS Author;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgQXV0aG9yIChcbiAgYXV0aG9ySWQgSU5URUdFUiBQUklNQVJZIEtFWSxcbiAgbGFzdE5hbWUgVEVYVCxcbiAgZm9yZU5hbWUgVEVYVCxcbiAgaW5pdGlhbHMgVEVYVFxuKTtcbmBgYCJ9 -->
+<pre class="sql"><code>CREATE TABLE Author (
+  authorId INTEGER PRIMARY KEY,
+  lastName TEXT,
+  foreName TEXT,
+  initials TEXT
+);</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -246,10 +257,20 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table Journal</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsO1xuYGBgIn0= -->
+<pre class="sql"><code>DROP TABLE IF EXISTS Journal;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgSm91cm5hbCAoXG4gIElTU04gVEVYVCBQUklNQVJZIEtFWSxcbiAgdGl0bGUgVEVYVCBOT1QgTlVMTCxcbiAgaXNvYWJicmV2aWF0aW9uIFRFWFQgTk9UIE5VTExcbik7XG5gYGAifQ== -->
+<pre class="sql"><code>CREATE TABLE Journal (
+  ISSN TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  isoabbreviation TEXT NOT NULL
+);</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -257,10 +278,23 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table JournalIssue</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsSXNzdWU7XG5gYGAifQ== -->
+<pre class="sql"><code>DROP TABLE IF EXISTS JournalIssue;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgSm91cm5hbElzc3VlIChcbiAgaklkIElOVEVHRVIgUFJJTUFSWSBLRVksXG4gIElTU04gSU5URUdFUiBSRUZFUkVOQ0VTIEpvdXJuYWwoSVNTTikgT04gREVMRVRFIENBU0NBREUsXG4gIHZvbHVtZSBJTlRFR0VSIE5PVCBOVUxMLFxuICBpc3N1ZSBJTlRFR0VSIE5PVCBOVUxMLFxuICBwdWJZZWFyIFRFWFQgTk9UIE5VTEwsXG4gIHB1Yk1vbnRoIFRFWFQgTk9UIE5VTExcbik7XG5gYGAifQ== -->
+<pre class="sql"><code>CREATE TABLE JournalIssue (
+  jId INTEGER PRIMARY KEY,
+  ISSN INTEGER REFERENCES Journal(ISSN) ON DELETE CASCADE,
+  volume INTEGER NOT NULL,
+  issue INTEGER NOT NULL,
+  pubYear TEXT NOT NULL,
+  pubMonth TEXT NOT NULL
+);</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -268,10 +302,20 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table AuthorShip</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3JTaGlwO1xuYGBgIn0= -->
+<pre class="sql"><code>DROP TABLE IF EXISTS AuthorShip;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgQXV0aG9yU2hpcCAoXG4gIGFydGljbGVJZCBJTlRFR0VSLFxuICBhdXRob3JJZCBJTlRFR0VSLFxuICBQUklNQVJZIEtFWSAoYXJ0aWNsZUlkLCBhdXRob3JJZClcbilcbmBgYCJ9 -->
+<pre class="sql"><code>CREATE TABLE AuthorShip (
+  articleId INTEGER,
+  authorId INTEGER,
+  PRIMARY KEY (articleId, authorId)
+)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -279,10 +323,22 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table Article</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBBcnRpY2xlO1xuYGBgIn0= -->
+<pre class="sql"><code>DROP TABLE IF EXISTS Article;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgQXJ0aWNsZSAoXG4gIGFydGljbGVJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLFxuICBqSWQgSU5URUdFUiBSRUZFUkVOQ0VTIEpvdXJuYWxJc3N1ZShqSWQpIE9OIERFTEVURSBDQVNDQURFLFxuICBwdWJNb2RlIFRFWFQgTk9UIE5VTEwsXG4gIHRpdGxlIFRFWFQgTk9UIE5VTEwsXG4gIGFic3RyYWN0IFRFWFQgTk9UIE5VTExcbilcbmBgYCJ9 -->
+<pre class="sql"><code>CREATE TABLE Article (
+  articleId INTEGER PRIMARY KEY,
+  jId INTEGER REFERENCES JournalIssue(jId) ON DELETE CASCADE,
+  pubMode TEXT NOT NULL,
+  title TEXT NOT NULL,
+  abstract TEXT NOT NULL
+)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -290,10 +346,23 @@ dbcon &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table History</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBIaXN0b3J5O1xuYGBgIn0= -->
+<pre class="sql"><code>DROP TABLE IF EXISTS History;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgSGlzdG9yeSAoXG4gIGhJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLFxuICBhcnRpY2xlSWQgSU5URUdFUiBSRUZFUkVOQ0VTIEFydGljbGUoYXJ0aWNsZUlkKSBPTiBERUxFVEUgQ0FTQ0FERSxcbiAgcHViU3RhdHVzIFRFWFQgTk9UIE5VTEwsXG4gIHllYXIgSU5URUdFUiBOT1QgTlVMTCxcbiAgbW9udGggSU5URUdFUiBOT1QgTlVMTCxcbiAgZGF5IElOVEVHRVIgTk9UIE5VTExcbilcbmBgYCJ9 -->
+<pre class="sql"><code>CREATE TABLE History (
+  hId INTEGER PRIMARY KEY,
+  articleId INTEGER REFERENCES Article(articleId) ON DELETE CASCADE,
+  pubStatus TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  month INTEGER NOT NULL,
+  day INTEGER NOT NULL
+)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -354,6 +423,9 @@ dbWriteTable(dbcon,name = &quot;Author&quot;, value = authors, append = TRUE)</c
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEF1dGhvcjtcbmBgYCJ9 -->
+<pre class="sql"><code>SELECT * FROM Author;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -383,6 +455,9 @@ dbWriteTable(dbcon,name = &quot;JournalIssue&quot;, value = journalIssues, appen
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEpvdXJuYWxJc3N1ZTtcbmBgYCJ9 -->
+<pre class="sql"><code>SELECT * FROM JournalIssue;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -412,6 +487,9 @@ dbWriteTable(dbcon,name = &quot;Article&quot;, value = article, append = TRUE)</
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEFydGljbGU7XG5gYGAifQ== -->
+<pre class="sql"><code>SELECT * FROM Article;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -442,6 +520,9 @@ dbWriteTable(dbcon,name = &quot;Authorship&quot;, value = authorship, append = T
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEF1dGhvclNoaXA7XG5gYGAifQ== -->
+<pre class="sql"><code>SELECT * FROM AuthorShip;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -469,18 +550,21 @@ dbWriteTable(dbcon,name = &quot;History&quot;, value = historys, append = TRUE)<
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEhpc3Rvcnk7XG5gYGAifQ== -->
+<pre class="sql"><code>SELECT * FROM History;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p><strong>q2</strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3FsQ21kIDwtIFwiU0VMRUNUIGppLmpJZCBBUyBqSWQsIGouSVNTTiBBUyBJU1NOLCBqLnRpdGxlIEFTIHRpdGxlLCBqaS52b2x1bWUgQVMgdm9sdW1lLCBcbiAgICAgICAgICAgIGppLmlzc3VlIEFTIGlzc3VlLCBqaS5wdWJZZWFyIEFzIHB1YlllYXIsIGppLnB1Yk1vbnRoIEFzIHB1Yk1vbnRoXG4gICAgICAgICAgICBGUk9NIEpvdXJuYWwgQVMgalxuICAgICAgICAgICAgSk9JTiBKb3VybmFsSXNzdWUgQVMgamkgT04gai5JU1NOID0gamkuSVNTTlwiXG5qb3VybmFsID0gZGJHZXRRdWVyeShkYmNvbiwgc3FsQ21kKVxuI2pvdXJuYWwgPSBjYmluZChqSWQ9cm93bmFtZXMoam91cm5hbCksam91cm5hbClcbmBgYCJ9 -->
-<pre class="r"><code>sqlCmd &lt;- &quot;SELECT ji.jId AS jId, j.ISSN AS ISSN, j.title AS title, ji.volume AS volume, 
-            ji.issue AS issue, ji.pubYear As pubYear, ji.pubMonth As pubMonth
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3FsQ21kIDwtIFwiU0VMRUNUIGppLmpJZCBBUyBqSWQsIGouSVNTTiBBUyBJU1NOLCBqLnRpdGxlIEFTIHRpdGxlLCBcbiAgICAgICAgICAgICAgamkudm9sdW1lIEFTIHZvbHVtZSwgamkuaXNzdWUgQVMgaXNzdWUsIFxuICAgICAgICAgICAgICBqaS5wdWJZZWFyIEFzIHB1YlllYXIsIGppLnB1Yk1vbnRoIEFzIHB1Yk1vbnRoXG4gICAgICAgICAgICBGUk9NIEpvdXJuYWwgQVMgalxuICAgICAgICAgICAgSk9JTiBKb3VybmFsSXNzdWUgQVMgamkgT04gai5JU1NOID0gamkuSVNTTlwiXG5qb3VybmFsID0gZGJHZXRRdWVyeShkYmNvbiwgc3FsQ21kKVxuYGBgIn0= -->
+<pre class="r"><code>sqlCmd &lt;- &quot;SELECT ji.jId AS jId, j.ISSN AS ISSN, j.title AS title, 
+              ji.volume AS volume, ji.issue AS issue, 
+              ji.pubYear As pubYear, ji.pubMonth As pubMonth
             FROM Journal AS j
             JOIN JournalIssue AS ji ON j.ISSN = ji.ISSN&quot;
-journal = dbGetQuery(dbcon, sqlCmd)
-#journal = cbind(jId=rownames(journal),journal)</code></pre>
+journal = dbGetQuery(dbcon, sqlCmd)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -532,10 +616,24 @@ dbcon1 &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table Journals</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFscztcbmBgYCJ9 -->
+<pre class="sql"><code>DROP TABLE IF EXISTS Journals;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgSm91cm5hbHMgKFxuICBqSWQgSU5URUdFUiBQUklNQVJZIEtFWSxcbiAgSVNTTiBURVhUIE5PVCBOVUxMLFxuICB2b2x1bWUgSU5URUdFUiBOT1QgTlVMTCxcbiAgaXNzdWUgSU5URUdFUiBOT1QgTlVMTCxcbiAgcHViWWVhciBURVhUIE5PVCBOVUxMLFxuICBwdWJNb250aCBURVhUIE5PVCBOVUxMLFxuICB0aXRsZSBURVhUIE5PVCBOVUxMXG4pO1xuYGBgIn0= -->
+<pre class="sql"><code>CREATE TABLE Journals (
+  jId INTEGER PRIMARY KEY,
+  ISSN TEXT NOT NULL,
+  volume INTEGER NOT NULL,
+  issue INTEGER NOT NULL,
+  pubYear TEXT NOT NULL,
+  pubMonth TEXT NOT NULL,
+  title TEXT NOT NULL
+);</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -543,10 +641,20 @@ dbcon1 &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table Author</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3JzO1xuYGBgIn0= -->
+<pre class="sql"><code>DROP TABLE IF EXISTS Authors;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgQXV0aG9ycyAoXG4gIGF1dGhvcklkIElOVEVHRVIgUFJJTUFSWSBLRVksXG4gIGxhc3ROYW1lIFRFWFQsXG4gIGZvcmVOYW1lIFRFWFRcbik7XG5gYGAifQ== -->
+<pre class="sql"><code>CREATE TABLE Authors (
+  authorId INTEGER PRIMARY KEY,
+  lastName TEXT,
+  foreName TEXT
+);</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -554,10 +662,22 @@ dbcon1 &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table History</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBIaXN0b3J5cztcbmBgYCJ9 -->
+<pre class="sql"><code>DROP TABLE IF EXISTS Historys;</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgSGlzdG9yeXMgKFxuICBoSWQgSU5URUdFUiBQUklNQVJZIEtFWSxcbiAgcHViU3RhdHVzIFRFWFQgTk9UIE5VTEwsXG4gIHllYXIgSU5URUdFUiBOT1QgTlVMTCxcbiAgbW9udGggSU5URUdFUiBOT1QgTlVMTCxcbiAgZGF5IElOVEVHRVIgTk9UIE5VTExcbilcbmBgYCJ9 -->
+<pre class="sql"><code>CREATE TABLE Historys (
+  hId INTEGER PRIMARY KEY,
+  pubStatus TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  month INTEGER NOT NULL,
+  day INTEGER NOT NULL
+)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -565,31 +685,64 @@ dbcon1 &lt;- dbConnect(RSQLite::SQLite(), dbFile)</code></pre>
 <h2>Create table ArticleFact</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKGRiY29uMSwgXCJKb3VybmFsc1wiLCBqb3VybmFsLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuZGJXcml0ZVRhYmxlKGRiY29uMSwgXCJBdXRob3JzXCIsIGF1dGhvciwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmRiV3JpdGVUYWJsZShkYmNvbjEsIFwiSGlzdG9yeXNcIiwgaGlzdG9yeSwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmBgYCJ9 -->
-<pre class="r"><code>dbWriteTable(dbcon1, &quot;Journals&quot;, journal, overwrite = T, row.names = F)
-dbWriteTable(dbcon1, &quot;Authors&quot;, author, overwrite = T, row.names = F)
-dbWriteTable(dbcon1, &quot;Historys&quot;, history, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5EUk9QIFRBQkxFIElGIEVYSVNUUyBBcnRpY2xlRmFjdDtcbmBgYCJ9 -->
+<pre class="sql"><code>DROP TABLE IF EXISTS ArticleFact;</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5DUkVBVEUgVEFCTEUgQXJ0aWNsZUZhY3QgKFxuICBqSWQgVEVYVCBOT1QgTlVMTCxcbiAgYXV0aG9ySWQgSU5URUdFUiBOT1QgTlVMTCxcbiAgaElkIElOVEVHRVIgTk9UIE5VTEwsXG4gIHB1Yk1vZGUgVEVYVCxcbiAgdGl0bGUgVEVYVCxcbiAgUFJJTUFSWSBLRVkgKGpJZCwgYXV0aG9ySWQsIGhJZCksXG4gIEZPUkVJR04gS0VZIChqSWQpIFJFRkVSRU5DRVMgSm91cm5hbHMgKGpJZCksXG4gIEZPUkVJR04gS0VZIChhdXRob3JJZCkgUkVGRVJFTkNFUyBBdXRob3JzIChhdXRob3JJZCksXG4gIEZPUkVJR04gS0VZIChoSWQpIFJFRkVSRU5DRVMgSGlzdG9yeXMgKGhJZClcbik7XG5gYGAifQ== -->
+<pre class="sql"><code>CREATE TABLE ArticleFact (
+  jId TEXT NOT NULL,
+  authorId INTEGER NOT NULL,
+  hId INTEGER NOT NULL,
+  pubMode TEXT,
+  title TEXT,
+  PRIMARY KEY (jId, authorId, hId),
+  FOREIGN KEY (jId) REFERENCES Journals (jId),
+  FOREIGN KEY (authorId) REFERENCES Authors (authorId),
+  FOREIGN KEY (hId) REFERENCES Historys (hId)
+);</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKGRiY29uMSwgXCJKb3VybmFsc1wiLCBqb3VybmFsLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuZGJXcml0ZVRhYmxlKGRiY29uMSwgXCJBdXRob3JzXCIsIGF1dGhvciwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmRiV3JpdGVUYWJsZShkYmNvbjEsIFwiSGlzdG9yeXNcIiwgaGlzdG9yeSwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmRiV3JpdGVUYWJsZShkYmNvbjEsIFwiQXJ0aWNsZUZhY3RcIiwgdGVtcCwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmBgYCJ9 -->
+<pre class="r"><code>dbWriteTable(dbcon1, &quot;Journals&quot;, journal, overwrite = T, row.names = F)
+dbWriteTable(dbcon1, &quot;Authors&quot;, author, overwrite = T, row.names = F)
+dbWriteTable(dbcon1, &quot;Historys&quot;, history, overwrite = T, row.names = F)
+dbWriteTable(dbcon1, &quot;ArticleFact&quot;, temp, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEpvdXJuYWxzXG5gYGAifQ== -->
+<pre class="sql"><code>SELECT * FROM Journals</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEF1dGhvcnNcbmBgYCJ9 -->
+<pre class="sql"><code>SELECT * FROM Authors</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEhpc3RvcnlzXG5gYGAifQ== -->
+<pre class="sql"><code>SELECT * FROM Historys</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEFydGljbGVGYWN0XG5gYGAifQ== -->
+<pre class="sql"><code>SELECT * FROM ArticleFact</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -604,7 +757,7 @@ dbDisconnect(dbcon1)</code></pre>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJhY3RpY3VtX1R3byIKb3V0cHV0OgogIHBkZl9kb2N1bWVudDogZGVmYXVsdAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKLS0tCiMgQ3JlYXRlIGRhdGFiYXNlIHNjaGVtYQojIyBDb25uZWN0IHRvIGRhdGFiYXNlCmBgYHtyfQpsaWJyYXJ5KFJTUUxpdGUpCgpkYkZpbGUgPSAiLi9QcmFjdGljdW0yLnNxbGl0ZSIKCmRiY29uIDwtIGRiQ29ubmVjdChSU1FMaXRlOjpTUUxpdGUoKSwgZGJGaWxlKQpgYGAKCiMjIENyZWF0ZSB0YWJsZSBBdXRob3IKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3I7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpDUkVBVEUgVEFCTEUgQXV0aG9yICgKICBhdXRob3JJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIGxhc3ROYW1lIFRFWFQsCiAgZm9yZU5hbWUgVEVYVCwKICBpbml0aWFscyBURVhUCik7CmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEpvdXJuYWwKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsOwpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KQ1JFQVRFIFRBQkxFIEpvdXJuYWwgKAogIElTU04gVEVYVCBQUklNQVJZIEtFWSwKICB0aXRsZSBURVhUIE5PVCBOVUxMLAogIGlzb2FiYnJldmlhdGlvbiBURVhUIE5PVCBOVUxMCik7CmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEpvdXJuYWxJc3N1ZQpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259CkRST1AgVEFCTEUgSUYgRVhJU1RTIEpvdXJuYWxJc3N1ZTsKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259CkNSRUFURSBUQUJMRSBKb3VybmFsSXNzdWUgKAogIGpJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIElTU04gSU5URUdFUiBSRUZFUkVOQ0VTIEpvdXJuYWwoSVNTTikgT04gREVMRVRFIENBU0NBREUsCiAgdm9sdW1lIElOVEVHRVIgTk9UIE5VTEwsCiAgaXNzdWUgSU5URUdFUiBOT1QgTlVMTCwKICBwdWJZZWFyIFRFWFQgTk9UIE5VTEwsCiAgcHViTW9udGggVEVYVCBOT1QgTlVMTAopOwpgYGAKCiMjIENyZWF0ZSB0YWJsZSBBdXRob3JTaGlwCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KRFJPUCBUQUJMRSBJRiBFWElTVFMgQXV0aG9yU2hpcDsKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259CkNSRUFURSBUQUJMRSBBdXRob3JTaGlwICgKICBhcnRpY2xlSWQgSU5URUdFUiwKICBhdXRob3JJZCBJTlRFR0VSLAogIFBSSU1BUlkgS0VZIChhcnRpY2xlSWQsIGF1dGhvcklkKQopCmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEFydGljbGUKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBBcnRpY2xlOwpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KQ1JFQVRFIFRBQkxFIEFydGljbGUgKAogIGFydGljbGVJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIGpJZCBJTlRFR0VSIFJFRkVSRU5DRVMgSm91cm5hbElzc3VlKGpJZCkgT04gREVMRVRFIENBU0NBREUsCiAgcHViTW9kZSBURVhUIE5PVCBOVUxMLAogIHRpdGxlIFRFWFQgTk9UIE5VTEwsCiAgYWJzdHJhY3QgVEVYVCBOT1QgTlVMTAopCmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEhpc3RvcnkKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBIaXN0b3J5OwpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KQ1JFQVRFIFRBQkxFIEhpc3RvcnkgKAogIGhJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIGFydGljbGVJZCBJTlRFR0VSIFJFRkVSRU5DRVMgQXJ0aWNsZShhcnRpY2xlSWQpIE9OIERFTEVURSBDQVNDQURFLAogIHB1YlN0YXR1cyBURVhUIE5PVCBOVUxMLAogIHllYXIgSU5URUdFUiBOT1QgTlVMTCwKICBtb250aCBJTlRFR0VSIE5PVCBOVUxMLAogIGRheSBJTlRFR0VSIE5PVCBOVUxMCikKYGBgCgojIExvYWRpbmcgTGlicmFyaWVzCgpgYGB7ciB3YXJuaW5nPUZBTFNFfQpsaWJyYXJ5KFhNTCkKbGlicmFyeSh4c2x0KQpgYGAKCiMgTG9hZCBYTUwgZGF0YSB0byBkYXRhYmFzZQojIyBSZWFkIFhNTCBmaWxlCmBgYHtyfQp4bWxQYXRoIDwtICIuL3B1Ym1lZF9zYW1wbGUueG1sIgp4bWxEb2MgPSByZWFkX3htbCh4bWxQYXRoKQpgYGAKCiMjIExvYWQgSm91cm5hbCB0YWJsZQpgYGB7cn0KIyBFeHRyYWN0IEpvdXJuYWwgRGF0YQp4c2xQYXRoID0gIi4vam91cm5hbC54c2wiCnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT0ieHNsdCIpCmpvdXJuYWxfcmF3ID0geG1sX3hzbHQoeG1sRG9jLHhzbERvYykKam91cm5hbHMgPSB1bmlxdWUoeG1sVG9EYXRhRnJhbWUoWE1MOjp4bWxQYXJzZShqb3VybmFsX3JhdykpKQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJKb3VybmFsIiwgdmFsdWUgPSBqb3VybmFscywgYXBwZW5kID0gVFJVRSkKYGBgCgojIyBMb2FkIEF1dGhvciB0YWJsZQpgYGB7cn0KIyBFeHRyYWN0IEF1dGhvciBEYXRhCnhzbFBhdGggPSAiLi9hdXRob3IueHNsIgp4c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9InhzbHQiKQphdXRob3JfcmF3ID0geG1sX3hzbHQoeG1sRG9jLHhzbERvYykKYXV0aG9ycyA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGF1dGhvcl9yYXcpKSkKYXV0aG9ycyA9IGNiaW5kKGF1dGhvcklkPXJvd25hbWVzKGF1dGhvcnMpLGF1dGhvcnMpCmRiV3JpdGVUYWJsZShkYmNvbixuYW1lID0gIkF1dGhvciIsIHZhbHVlID0gYXV0aG9ycywgYXBwZW5kID0gVFJVRSkKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259ClNFTEVDVCAqIEZST00gQXV0aG9yOwpgYGAKIyMgTG9hZCBKb3VybmFsSXNzdWUgdGFibGUKYGBge3J9CiMgRXh0cmFjdCBKb3VybmFsSXNzdWUgRGF0YQp4c2xQYXRoID0gIi4vam91cm5hbElzc3VlLnhzbCIKeHNsRG9jID0gcmVhZF94bWwoeHNsUGF0aCxwYWNrYWdlPSJ4c2x0IikKam91cm5hbElzc3VlX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpCmpvdXJuYWxJc3N1ZXMgPSB1bmlxdWUoeG1sVG9EYXRhRnJhbWUoWE1MOjp4bWxQYXJzZShqb3VybmFsSXNzdWVfcmF3KSkpCmpvdXJuYWxJc3N1ZXMgPSBjYmluZChqSWQ9cm93bmFtZXMoam91cm5hbElzc3Vlcyksam91cm5hbElzc3VlcykKbWVkRGF0ZSA8LSBqb3VybmFsSXNzdWVzJG1lZGxpbmVEYXRlCmZvciAoaSBpbiAxIDogbnJvdyhqb3VybmFsSXNzdWVzKSkgewogIGlmIChtZWREYXRlW2ldICE9ICcnKSB7CiAgcHViRGF0ZSA8LSBzdHJzcGxpdChtZWREYXRlW2ldLHNwbGl0ID0gJyAnKQogIGpvdXJuYWxJc3N1ZXMkcHViWWVhcltpXSA9IHB1YkRhdGVbWzFdXVsxXQogIGpvdXJuYWxJc3N1ZXMkcHViTW9udGhbaV0gPSBwdWJEYXRlW1sxXV1bMl0KICB9Cn0Kam91cm5hbElzc3VlcyA8LSBzdWJzZXQoam91cm5hbElzc3Vlcywgc2VsZWN0ID0gLWMoNykpCmRiV3JpdGVUYWJsZShkYmNvbixuYW1lID0gIkpvdXJuYWxJc3N1ZSIsIHZhbHVlID0gam91cm5hbElzc3VlcywgYXBwZW5kID0gVFJVRSkKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259ClNFTEVDVCAqIEZST00gSm91cm5hbElzc3VlOwpgYGAKCiMjIExvYWQgQXJ0aWNsZSB0YWJsZQpgYGB7cn0KIyBFeHRyYWN0IEFydGljbGUgRGF0YQp4c2xQYXRoID0gIi4vQXJ0aWNsZS54c2wiCnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT0ieHNsdCIpCmFydGljbGVfcmF3ID0geG1sX3hzbHQoeG1sRG9jLHhzbERvYykKYXJ0aWNsZSA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGFydGljbGVfcmF3KSkpCnJvd25hbWVzKGFydGljbGUpIDwtIE5VTEwKaklkcyA9IGMoKQpmb3IoaSBpbiAxOm5yb3coYXJ0aWNsZSkpewogIHRlbXAgPSBhcnRpY2xlW2ksXQogIGpJZHMgPSBhcHBlbmQoaklkcyxqb3VybmFsSXNzdWVzW3doaWNoKHRlbXAkSVNTTj09am91cm5hbElzc3VlcyRJU1NOCiAgICAgICAgICAgICAgICAgICAgICAgJiB0ZW1wJHZvbHVtZT09am91cm5hbElzc3VlcyR2b2x1bWUKICAgICAgICAgICAgICAgICAgICAgICAmIHRlbXAkaXNzdWUgPT0gam91cm5hbElzc3VlcyRpc3N1ZSksXSRqSWQpCn0KYXJ0aWNsZSA9IGNiaW5kKGFydGljbGVJZD1yb3duYW1lcyhhcnRpY2xlKSxqSWQ9aklkcyxhcnRpY2xlKQphcnRpY2xlID0gc3Vic2V0KGFydGljbGUsIHNlbGVjdCA9IDE6NSkKZGJXcml0ZVRhYmxlKGRiY29uLG5hbWUgPSAiQXJ0aWNsZSIsIHZhbHVlID0gYXJ0aWNsZSwgYXBwZW5kID0gVFJVRSkKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259ClNFTEVDVCAqIEZST00gQXJ0aWNsZTsKYGBgCgoKIyMgTG9hZCBBdXRob3JTaGlwIHRhYmxlCmBgYHtyfQojIEV4dHJhY3QgYXV0aG9yc2hpcCBEYXRhCnhzbFBhdGggPSAiLi9BdXRob3JTaGlwLnhzbCIKeHNsRG9jID0gcmVhZF94bWwoeHNsUGF0aCxwYWNrYWdlPSJ4c2x0IikKYXV0aG9yc2hpcF9yYXcgPSB4bWxfeHNsdCh4bWxEb2MseHNsRG9jKQphdXRob3JzaGlwID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoYXV0aG9yc2hpcF9yYXcpKSkKcm93bmFtZXMoYXV0aG9yc2hpcCkgPC0gTlVMTAphdXRob3JJZHMgPSBjKCkKYXJ0aWNsZUlkcyA9IGMoKQpmb3IoaSBpbiAxOm5yb3coYXV0aG9yc2hpcCkpewogIHRlbXAgPSBhdXRob3JzaGlwW2ksXQogIGFydGljbGVJZHMgPSBhcHBlbmQoYXJ0aWNsZUlkcywgYXJ0aWNsZVt3aGljaCh0ZW1wJHRpdGxlPT1hcnRpY2xlJHRpdGxlKSxdJGFydGljbGVJZCkKICBhdXRob3JJZHMgPSBhcHBlbmQoYXV0aG9ySWRzLGF1dGhvcnNbd2hpY2godGVtcCRMYXN0TmFtZT09YXV0aG9ycyRsYXN0TmFtZQogICAgICAgICAgICAgICAgICAgICAgICYgdGVtcCRGb3JlTmFtZT09YXV0aG9ycyRmb3JlTmFtZSksXSRhdXRob3JJZCkKfQphdXRob3JzaGlwID0gY2JpbmQoYXJ0aWNsZUlkPWFydGljbGVJZHMsYXV0aG9ySWQ9YXV0aG9ySWRzLGF1dGhvcnNoaXApCmF1dGhvcnNoaXAgPSBzdWJzZXQoYXV0aG9yc2hpcCwgc2VsZWN0ID0gMToyKQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJBdXRob3JzaGlwIiwgdmFsdWUgPSBhdXRob3JzaGlwLCBhcHBlbmQgPSBUUlVFKQpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KU0VMRUNUICogRlJPTSBBdXRob3JTaGlwOwpgYGAKCgojIyBMb2FkIEhpc3RvcnkgdGFibGUKYGBge3J9CiMgRXh0cmFjdCBIaXN0b3J5IERhdGEKeHNsUGF0aCA9ICIuL2hpc3RvcnkueHNsIgp4c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9InhzbHQiKQpoaXN0b3J5X3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpCmhpc3RvcnlzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoaGlzdG9yeV9yYXcpKSkKcm93bmFtZXMoaGlzdG9yeXMpIDwtIE5VTEwKYXJ0aWNsZUlkcyA9IGMoKQpmb3IoaSBpbiAxOm5yb3coaGlzdG9yeXMpKXsKICB0ZW1wID0gaGlzdG9yeXNbaSxdCiAgYXJ0aWNsZUlkcyA9IGFwcGVuZChhcnRpY2xlSWRzLGFydGljbGVbd2hpY2godGVtcCR0aXRsZT09YXJ0aWNsZSR0aXRsZSksXSRhcnRpY2xlSWQpCn0KaGlzdG9yeXMgPSBjYmluZChoSWQ9cm93bmFtZXMoaGlzdG9yeXMpLGFydGljbGVJZD1hcnRpY2xlSWRzLGhpc3RvcnlzKQpoaXN0b3J5cyA9IHN1YnNldChoaXN0b3J5cywgc2VsZWN0ID0gMTo2KQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJIaXN0b3J5IiwgdmFsdWUgPSBoaXN0b3J5cywgYXBwZW5kID0gVFJVRSkKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259ClNFTEVDVCAqIEZST00gSGlzdG9yeTsKYGBgCgoqKnEyKioKCmBgYHtyfQpzcWxDbWQgPC0gIlNFTEVDVCBqaS5qSWQgQVMgaklkLCBqLklTU04gQVMgSVNTTiwgai50aXRsZSBBUyB0aXRsZSwgCiAgICAgICAgICAgICAgamkudm9sdW1lIEFTIHZvbHVtZSwgamkuaXNzdWUgQVMgaXNzdWUsIAogICAgICAgICAgICAgIGppLnB1YlllYXIgQXMgcHViWWVhciwgamkucHViTW9udGggQXMgcHViTW9udGgKICAgICAgICAgICAgRlJPTSBKb3VybmFsIEFTIGoKICAgICAgICAgICAgSk9JTiBKb3VybmFsSXNzdWUgQVMgamkgT04gai5JU1NOID0gamkuSVNTTiIKam91cm5hbCA9IGRiR2V0UXVlcnkoZGJjb24sIHNxbENtZCkKYGBgCgpgYGB7cn0Kc3FsQ21kIDwtICJTRUxFQ1QgYXV0aG9ySUQsIGxhc3ROYW1lLCBmb3JlTmFtZQogICAgICAgICAgICBGUk9NIEF1dGhvciIKYXV0aG9yID0gZGJHZXRRdWVyeShkYmNvbiwgc3FsQ21kKQpgYGAKCmBgYHtyfQpzcWxDbWQgPC0gIlNFTEVDVCBoSWQsIHB1YlN0YXR1cywgeWVhciwgbW9udGgsIGRheQogICAgICAgICAgICBGUk9NIEhpc3RvcnkiCmhpc3RvcnkgPSBkYkdldFF1ZXJ5KGRiY29uLCBzcWxDbWQpCmBgYAoKYGBge3J9CnNxbENtZCA8LSAiU0VMRUNUIEpvdXJuYWxJc3N1ZS5qSWQgQVMgaklkLCBBdXRob3JTaGlwLmF1dGhvcklkIEFTIGF1dGhvcklkLCAKICAgICAgICAgICAgSGlzdG9yeS5oSWQgQVMgaElkLCBKb3VybmFsSXNzdWUuSVNTTiBBUyBJU1NOLCAKICAgICAgICAgICAgQXJ0aWNsZS5wdWJNb2RlIEFTIHB1Yk1vZGUsIEFydGljbGUudGl0bGUgQVMgdGl0bGUKICAgICAgICAgIEZST00gQXJ0aWNsZQogICAgICAgICAgSk9JTiBBdXRob3JTaGlwIE9OIEFydGljbGUuYXJ0aWNsZUlkID0gQXV0aG9yU2hpcC5hcnRpY2xlSWQKICAgICAgICAgIEpPSU4gSm91cm5hbElzc3VlIE9OIEFydGljbGUuaklkID0gSm91cm5hbElzc3VlLmpJZAogICAgICAgICAgSk9JTiBIaXN0b3J5IE9OIEFydGljbGUuYXJ0aWNsZUlkID0gSGlzdG9yeS5hcnRpY2xlSWQiCnRlbXAgPSBkYkdldFF1ZXJ5KGRiY29uLHNxbENtZCkKYGBgCgoKYGBge3J9CmxpYnJhcnkoUlNRTGl0ZSkKCmRiRmlsZSA9ICIuL1ByYWN0aWN1bTJfUGFydDIuc3FsaXRlIgoKZGJjb24xIDwtIGRiQ29ubmVjdChSU1FMaXRlOjpTUUxpdGUoKSwgZGJGaWxlKQpgYGAKCiMjIENyZWF0ZSB0YWJsZSBKb3VybmFscwpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb24xfQpEUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsczsKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb24xfQpDUkVBVEUgVEFCTEUgSm91cm5hbHMgKAogIGpJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIElTU04gVEVYVCBOT1QgTlVMTCwKICB2b2x1bWUgSU5URUdFUiBOT1QgTlVMTCwKICBpc3N1ZSBJTlRFR0VSIE5PVCBOVUxMLAogIHB1YlllYXIgVEVYVCBOT1QgTlVMTCwKICBwdWJNb250aCBURVhUIE5PVCBOVUxMLAogIHRpdGxlIFRFWFQgTk9UIE5VTEwKKTsKYGBgCgojIyBDcmVhdGUgdGFibGUgQXV0aG9yCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbjF9CkRST1AgVEFCTEUgSUYgRVhJU1RTIEF1dGhvcnM7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29uMX0KQ1JFQVRFIFRBQkxFIEF1dGhvcnMgKAogIGF1dGhvcklkIElOVEVHRVIgUFJJTUFSWSBLRVksCiAgbGFzdE5hbWUgVEVYVCwKICBmb3JlTmFtZSBURVhUCik7CmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEhpc3RvcnkKYGBge3NxbCBjb25uZWN0aW9uPWRiY29uMX0KRFJPUCBUQUJMRSBJRiBFWElTVFMgSGlzdG9yeXM7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29uMX0KQ1JFQVRFIFRBQkxFIEhpc3RvcnlzICgKICBoSWQgSU5URUdFUiBQUklNQVJZIEtFWSwKICBwdWJTdGF0dXMgVEVYVCBOT1QgTlVMTCwKICB5ZWFyIElOVEVHRVIgTk9UIE5VTEwsCiAgbW9udGggSU5URUdFUiBOT1QgTlVMTCwKICBkYXkgSU5URUdFUiBOT1QgTlVMTAopCmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEFydGljbGVGYWN0CmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbjF9CkRST1AgVEFCTEUgSUYgRVhJU1RTIEFydGljbGVGYWN0OwpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbjF9CkNSRUFURSBUQUJMRSBBcnRpY2xlRmFjdCAoCiAgaklkIFRFWFQgTk9UIE5VTEwsCiAgYXV0aG9ySWQgSU5URUdFUiBOT1QgTlVMTCwKICBoSWQgSU5URUdFUiBOT1QgTlVMTCwKICBwdWJNb2RlIFRFWFQsCiAgdGl0bGUgVEVYVCwKICBQUklNQVJZIEtFWSAoaklkLCBhdXRob3JJZCwgaElkKSwKICBGT1JFSUdOIEtFWSAoaklkKSBSRUZFUkVOQ0VTIEpvdXJuYWxzIChqSWQpLAogIEZPUkVJR04gS0VZIChhdXRob3JJZCkgUkVGRVJFTkNFUyBBdXRob3JzIChhdXRob3JJZCksCiAgRk9SRUlHTiBLRVkgKGhJZCkgUkVGRVJFTkNFUyBIaXN0b3J5cyAoaElkKQopOwpgYGAKCgoKYGBge3J9CmRiV3JpdGVUYWJsZShkYmNvbjEsICJKb3VybmFscyIsIGpvdXJuYWwsIG92ZXJ3cml0ZSA9IFQsIHJvdy5uYW1lcyA9IEYpCmRiV3JpdGVUYWJsZShkYmNvbjEsICJBdXRob3JzIiwgYXV0aG9yLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKQpkYldyaXRlVGFibGUoZGJjb24xLCAiSGlzdG9yeXMiLCBoaXN0b3J5LCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKQpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbjF9ClNFTEVDVCAqIEZST00gSm91cm5hbHMKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb24xfQpTRUxFQ1QgKiBGUk9NIEF1dGhvcnMKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb24xfQpTRUxFQ1QgKiBGUk9NIEhpc3RvcnlzCmBgYAoKYGBge3J9CmRiRGlzY29ubmVjdChkYmNvbikKZGJEaXNjb25uZWN0KGRiY29uMSkKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJhY3RpY3VtX1R3byIKb3V0cHV0OgogIHBkZl9kb2N1bWVudDogZGVmYXVsdAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKLS0tCiMgQ3JlYXRlIGRhdGFiYXNlIHNjaGVtYQojIyBDb25uZWN0IHRvIGRhdGFiYXNlCmBgYHtyfQpsaWJyYXJ5KFJTUUxpdGUpCgpkYkZpbGUgPSAiLi9QcmFjdGljdW0yLnNxbGl0ZSIKCmRiY29uIDwtIGRiQ29ubmVjdChSU1FMaXRlOjpTUUxpdGUoKSwgZGJGaWxlKQpgYGAKCiMjIENyZWF0ZSB0YWJsZSBBdXRob3IKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBBdXRob3I7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpDUkVBVEUgVEFCTEUgQXV0aG9yICgKICBhdXRob3JJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIGxhc3ROYW1lIFRFWFQsCiAgZm9yZU5hbWUgVEVYVCwKICBpbml0aWFscyBURVhUCik7CmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEpvdXJuYWwKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsOwpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KQ1JFQVRFIFRBQkxFIEpvdXJuYWwgKAogIElTU04gVEVYVCBQUklNQVJZIEtFWSwKICB0aXRsZSBURVhUIE5PVCBOVUxMLAogIGlzb2FiYnJldmlhdGlvbiBURVhUIE5PVCBOVUxMCik7CmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEpvdXJuYWxJc3N1ZQpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259CkRST1AgVEFCTEUgSUYgRVhJU1RTIEpvdXJuYWxJc3N1ZTsKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259CkNSRUFURSBUQUJMRSBKb3VybmFsSXNzdWUgKAogIGpJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIElTU04gSU5URUdFUiBSRUZFUkVOQ0VTIEpvdXJuYWwoSVNTTikgT04gREVMRVRFIENBU0NBREUsCiAgdm9sdW1lIElOVEVHRVIgTk9UIE5VTEwsCiAgaXNzdWUgSU5URUdFUiBOT1QgTlVMTCwKICBwdWJZZWFyIFRFWFQgTk9UIE5VTEwsCiAgcHViTW9udGggVEVYVCBOT1QgTlVMTAopOwpgYGAKCiMjIENyZWF0ZSB0YWJsZSBBdXRob3JTaGlwCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KRFJPUCBUQUJMRSBJRiBFWElTVFMgQXV0aG9yU2hpcDsKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259CkNSRUFURSBUQUJMRSBBdXRob3JTaGlwICgKICBhcnRpY2xlSWQgSU5URUdFUiwKICBhdXRob3JJZCBJTlRFR0VSLAogIFBSSU1BUlkgS0VZIChhcnRpY2xlSWQsIGF1dGhvcklkKQopCmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEFydGljbGUKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBBcnRpY2xlOwpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KQ1JFQVRFIFRBQkxFIEFydGljbGUgKAogIGFydGljbGVJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIGpJZCBJTlRFR0VSIFJFRkVSRU5DRVMgSm91cm5hbElzc3VlKGpJZCkgT04gREVMRVRFIENBU0NBREUsCiAgcHViTW9kZSBURVhUIE5PVCBOVUxMLAogIHRpdGxlIFRFWFQgTk9UIE5VTEwsCiAgYWJzdHJhY3QgVEVYVCBOT1QgTlVMTAopCmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEhpc3RvcnkKYGBge3NxbCBjb25uZWN0aW9uPWRiY29ufQpEUk9QIFRBQkxFIElGIEVYSVNUUyBIaXN0b3J5OwpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KQ1JFQVRFIFRBQkxFIEhpc3RvcnkgKAogIGhJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIGFydGljbGVJZCBJTlRFR0VSIFJFRkVSRU5DRVMgQXJ0aWNsZShhcnRpY2xlSWQpIE9OIERFTEVURSBDQVNDQURFLAogIHB1YlN0YXR1cyBURVhUIE5PVCBOVUxMLAogIHllYXIgSU5URUdFUiBOT1QgTlVMTCwKICBtb250aCBJTlRFR0VSIE5PVCBOVUxMLAogIGRheSBJTlRFR0VSIE5PVCBOVUxMCikKYGBgCgojIExvYWRpbmcgTGlicmFyaWVzCgpgYGB7ciB3YXJuaW5nPUZBTFNFfQpsaWJyYXJ5KFhNTCkKbGlicmFyeSh4c2x0KQpgYGAKCiMgTG9hZCBYTUwgZGF0YSB0byBkYXRhYmFzZQojIyBSZWFkIFhNTCBmaWxlCmBgYHtyfQp4bWxQYXRoIDwtICIuL3B1Ym1lZF9zYW1wbGUueG1sIgp4bWxEb2MgPSByZWFkX3htbCh4bWxQYXRoKQpgYGAKCiMjIExvYWQgSm91cm5hbCB0YWJsZQpgYGB7cn0KIyBFeHRyYWN0IEpvdXJuYWwgRGF0YQp4c2xQYXRoID0gIi4vam91cm5hbC54c2wiCnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT0ieHNsdCIpCmpvdXJuYWxfcmF3ID0geG1sX3hzbHQoeG1sRG9jLHhzbERvYykKam91cm5hbHMgPSB1bmlxdWUoeG1sVG9EYXRhRnJhbWUoWE1MOjp4bWxQYXJzZShqb3VybmFsX3JhdykpKQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJKb3VybmFsIiwgdmFsdWUgPSBqb3VybmFscywgYXBwZW5kID0gVFJVRSkKYGBgCgojIyBMb2FkIEF1dGhvciB0YWJsZQpgYGB7cn0KIyBFeHRyYWN0IEF1dGhvciBEYXRhCnhzbFBhdGggPSAiLi9hdXRob3IueHNsIgp4c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9InhzbHQiKQphdXRob3JfcmF3ID0geG1sX3hzbHQoeG1sRG9jLHhzbERvYykKYXV0aG9ycyA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGF1dGhvcl9yYXcpKSkKYXV0aG9ycyA9IGNiaW5kKGF1dGhvcklkPXJvd25hbWVzKGF1dGhvcnMpLGF1dGhvcnMpCmRiV3JpdGVUYWJsZShkYmNvbixuYW1lID0gIkF1dGhvciIsIHZhbHVlID0gYXV0aG9ycywgYXBwZW5kID0gVFJVRSkKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259ClNFTEVDVCAqIEZST00gQXV0aG9yOwpgYGAKIyMgTG9hZCBKb3VybmFsSXNzdWUgdGFibGUKYGBge3J9CiMgRXh0cmFjdCBKb3VybmFsSXNzdWUgRGF0YQp4c2xQYXRoID0gIi4vam91cm5hbElzc3VlLnhzbCIKeHNsRG9jID0gcmVhZF94bWwoeHNsUGF0aCxwYWNrYWdlPSJ4c2x0IikKam91cm5hbElzc3VlX3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpCmpvdXJuYWxJc3N1ZXMgPSB1bmlxdWUoeG1sVG9EYXRhRnJhbWUoWE1MOjp4bWxQYXJzZShqb3VybmFsSXNzdWVfcmF3KSkpCmpvdXJuYWxJc3N1ZXMgPSBjYmluZChqSWQ9cm93bmFtZXMoam91cm5hbElzc3Vlcyksam91cm5hbElzc3VlcykKbWVkRGF0ZSA8LSBqb3VybmFsSXNzdWVzJG1lZGxpbmVEYXRlCmZvciAoaSBpbiAxIDogbnJvdyhqb3VybmFsSXNzdWVzKSkgewogIGlmIChtZWREYXRlW2ldICE9ICcnKSB7CiAgcHViRGF0ZSA8LSBzdHJzcGxpdChtZWREYXRlW2ldLHNwbGl0ID0gJyAnKQogIGpvdXJuYWxJc3N1ZXMkcHViWWVhcltpXSA9IHB1YkRhdGVbWzFdXVsxXQogIGpvdXJuYWxJc3N1ZXMkcHViTW9udGhbaV0gPSBwdWJEYXRlW1sxXV1bMl0KICB9Cn0Kam91cm5hbElzc3VlcyA8LSBzdWJzZXQoam91cm5hbElzc3Vlcywgc2VsZWN0ID0gLWMoNykpCmRiV3JpdGVUYWJsZShkYmNvbixuYW1lID0gIkpvdXJuYWxJc3N1ZSIsIHZhbHVlID0gam91cm5hbElzc3VlcywgYXBwZW5kID0gVFJVRSkKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259ClNFTEVDVCAqIEZST00gSm91cm5hbElzc3VlOwpgYGAKCiMjIExvYWQgQXJ0aWNsZSB0YWJsZQpgYGB7cn0KIyBFeHRyYWN0IEFydGljbGUgRGF0YQp4c2xQYXRoID0gIi4vQXJ0aWNsZS54c2wiCnhzbERvYyA9IHJlYWRfeG1sKHhzbFBhdGgscGFja2FnZT0ieHNsdCIpCmFydGljbGVfcmF3ID0geG1sX3hzbHQoeG1sRG9jLHhzbERvYykKYXJ0aWNsZSA9IHVuaXF1ZSh4bWxUb0RhdGFGcmFtZShYTUw6OnhtbFBhcnNlKGFydGljbGVfcmF3KSkpCnJvd25hbWVzKGFydGljbGUpIDwtIE5VTEwKaklkcyA9IGMoKQpmb3IoaSBpbiAxOm5yb3coYXJ0aWNsZSkpewogIHRlbXAgPSBhcnRpY2xlW2ksXQogIGpJZHMgPSBhcHBlbmQoaklkcyxqb3VybmFsSXNzdWVzW3doaWNoKHRlbXAkSVNTTj09am91cm5hbElzc3VlcyRJU1NOCiAgICAgICAgICAgICAgICAgICAgICAgJiB0ZW1wJHZvbHVtZT09am91cm5hbElzc3VlcyR2b2x1bWUKICAgICAgICAgICAgICAgICAgICAgICAmIHRlbXAkaXNzdWUgPT0gam91cm5hbElzc3VlcyRpc3N1ZSksXSRqSWQpCn0KYXJ0aWNsZSA9IGNiaW5kKGFydGljbGVJZD1yb3duYW1lcyhhcnRpY2xlKSxqSWQ9aklkcyxhcnRpY2xlKQphcnRpY2xlID0gc3Vic2V0KGFydGljbGUsIHNlbGVjdCA9IDE6NSkKZGJXcml0ZVRhYmxlKGRiY29uLG5hbWUgPSAiQXJ0aWNsZSIsIHZhbHVlID0gYXJ0aWNsZSwgYXBwZW5kID0gVFJVRSkKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259ClNFTEVDVCAqIEZST00gQXJ0aWNsZTsKYGBgCgoKIyMgTG9hZCBBdXRob3JTaGlwIHRhYmxlCmBgYHtyfQojIEV4dHJhY3QgYXV0aG9yc2hpcCBEYXRhCnhzbFBhdGggPSAiLi9BdXRob3JTaGlwLnhzbCIKeHNsRG9jID0gcmVhZF94bWwoeHNsUGF0aCxwYWNrYWdlPSJ4c2x0IikKYXV0aG9yc2hpcF9yYXcgPSB4bWxfeHNsdCh4bWxEb2MseHNsRG9jKQphdXRob3JzaGlwID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoYXV0aG9yc2hpcF9yYXcpKSkKcm93bmFtZXMoYXV0aG9yc2hpcCkgPC0gTlVMTAphdXRob3JJZHMgPSBjKCkKYXJ0aWNsZUlkcyA9IGMoKQpmb3IoaSBpbiAxOm5yb3coYXV0aG9yc2hpcCkpewogIHRlbXAgPSBhdXRob3JzaGlwW2ksXQogIGFydGljbGVJZHMgPSBhcHBlbmQoYXJ0aWNsZUlkcywgYXJ0aWNsZVt3aGljaCh0ZW1wJHRpdGxlPT1hcnRpY2xlJHRpdGxlKSxdJGFydGljbGVJZCkKICBhdXRob3JJZHMgPSBhcHBlbmQoYXV0aG9ySWRzLGF1dGhvcnNbd2hpY2godGVtcCRMYXN0TmFtZT09YXV0aG9ycyRsYXN0TmFtZQogICAgICAgICAgICAgICAgICAgICAgICYgdGVtcCRGb3JlTmFtZT09YXV0aG9ycyRmb3JlTmFtZSksXSRhdXRob3JJZCkKfQphdXRob3JzaGlwID0gY2JpbmQoYXJ0aWNsZUlkPWFydGljbGVJZHMsYXV0aG9ySWQ9YXV0aG9ySWRzLGF1dGhvcnNoaXApCmF1dGhvcnNoaXAgPSBzdWJzZXQoYXV0aG9yc2hpcCwgc2VsZWN0ID0gMToyKQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJBdXRob3JzaGlwIiwgdmFsdWUgPSBhdXRob3JzaGlwLCBhcHBlbmQgPSBUUlVFKQpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbn0KU0VMRUNUICogRlJPTSBBdXRob3JTaGlwOwpgYGAKCgojIyBMb2FkIEhpc3RvcnkgdGFibGUKYGBge3J9CiMgRXh0cmFjdCBIaXN0b3J5IERhdGEKeHNsUGF0aCA9ICIuL2hpc3RvcnkueHNsIgp4c2xEb2MgPSByZWFkX3htbCh4c2xQYXRoLHBhY2thZ2U9InhzbHQiKQpoaXN0b3J5X3JhdyA9IHhtbF94c2x0KHhtbERvYyx4c2xEb2MpCmhpc3RvcnlzID0gdW5pcXVlKHhtbFRvRGF0YUZyYW1lKFhNTDo6eG1sUGFyc2UoaGlzdG9yeV9yYXcpKSkKcm93bmFtZXMoaGlzdG9yeXMpIDwtIE5VTEwKYXJ0aWNsZUlkcyA9IGMoKQpmb3IoaSBpbiAxOm5yb3coaGlzdG9yeXMpKXsKICB0ZW1wID0gaGlzdG9yeXNbaSxdCiAgYXJ0aWNsZUlkcyA9IGFwcGVuZChhcnRpY2xlSWRzLGFydGljbGVbd2hpY2godGVtcCR0aXRsZT09YXJ0aWNsZSR0aXRsZSksXSRhcnRpY2xlSWQpCn0KaGlzdG9yeXMgPSBjYmluZChoSWQ9cm93bmFtZXMoaGlzdG9yeXMpLGFydGljbGVJZD1hcnRpY2xlSWRzLGhpc3RvcnlzKQpoaXN0b3J5cyA9IHN1YnNldChoaXN0b3J5cywgc2VsZWN0ID0gMTo2KQpkYldyaXRlVGFibGUoZGJjb24sbmFtZSA9ICJIaXN0b3J5IiwgdmFsdWUgPSBoaXN0b3J5cywgYXBwZW5kID0gVFJVRSkKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb259ClNFTEVDVCAqIEZST00gSGlzdG9yeTsKYGBgCgoqKnEyKioKCmBgYHtyfQpzcWxDbWQgPC0gIlNFTEVDVCBqaS5qSWQgQVMgaklkLCBqLklTU04gQVMgSVNTTiwgai50aXRsZSBBUyB0aXRsZSwgCiAgICAgICAgICAgICAgamkudm9sdW1lIEFTIHZvbHVtZSwgamkuaXNzdWUgQVMgaXNzdWUsIAogICAgICAgICAgICAgIGppLnB1YlllYXIgQXMgcHViWWVhciwgamkucHViTW9udGggQXMgcHViTW9udGgKICAgICAgICAgICAgRlJPTSBKb3VybmFsIEFTIGoKICAgICAgICAgICAgSk9JTiBKb3VybmFsSXNzdWUgQVMgamkgT04gai5JU1NOID0gamkuSVNTTiIKam91cm5hbCA9IGRiR2V0UXVlcnkoZGJjb24sIHNxbENtZCkKYGBgCgpgYGB7cn0Kc3FsQ21kIDwtICJTRUxFQ1QgYXV0aG9ySUQsIGxhc3ROYW1lLCBmb3JlTmFtZQogICAgICAgICAgICBGUk9NIEF1dGhvciIKYXV0aG9yID0gZGJHZXRRdWVyeShkYmNvbiwgc3FsQ21kKQpgYGAKCmBgYHtyfQpzcWxDbWQgPC0gIlNFTEVDVCBoSWQsIHB1YlN0YXR1cywgeWVhciwgbW9udGgsIGRheQogICAgICAgICAgICBGUk9NIEhpc3RvcnkiCmhpc3RvcnkgPSBkYkdldFF1ZXJ5KGRiY29uLCBzcWxDbWQpCmBgYAoKYGBge3J9CnNxbENtZCA8LSAiU0VMRUNUIEpvdXJuYWxJc3N1ZS5qSWQgQVMgaklkLCBBdXRob3JTaGlwLmF1dGhvcklkIEFTIGF1dGhvcklkLCAKICAgICAgICAgICAgSGlzdG9yeS5oSWQgQVMgaElkLCBKb3VybmFsSXNzdWUuSVNTTiBBUyBJU1NOLCAKICAgICAgICAgICAgQXJ0aWNsZS5wdWJNb2RlIEFTIHB1Yk1vZGUsIEFydGljbGUudGl0bGUgQVMgdGl0bGUKICAgICAgICAgIEZST00gQXJ0aWNsZQogICAgICAgICAgSk9JTiBBdXRob3JTaGlwIE9OIEFydGljbGUuYXJ0aWNsZUlkID0gQXV0aG9yU2hpcC5hcnRpY2xlSWQKICAgICAgICAgIEpPSU4gSm91cm5hbElzc3VlIE9OIEFydGljbGUuaklkID0gSm91cm5hbElzc3VlLmpJZAogICAgICAgICAgSk9JTiBIaXN0b3J5IE9OIEFydGljbGUuYXJ0aWNsZUlkID0gSGlzdG9yeS5hcnRpY2xlSWQiCnRlbXAgPSBkYkdldFF1ZXJ5KGRiY29uLHNxbENtZCkKYGBgCgoKYGBge3J9CmxpYnJhcnkoUlNRTGl0ZSkKCmRiRmlsZSA9ICIuL1ByYWN0aWN1bTJfUGFydDIuc3FsaXRlIgoKZGJjb24xIDwtIGRiQ29ubmVjdChSU1FMaXRlOjpTUUxpdGUoKSwgZGJGaWxlKQpgYGAKCiMjIENyZWF0ZSB0YWJsZSBKb3VybmFscwpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb24xfQpEUk9QIFRBQkxFIElGIEVYSVNUUyBKb3VybmFsczsKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb24xfQpDUkVBVEUgVEFCTEUgSm91cm5hbHMgKAogIGpJZCBJTlRFR0VSIFBSSU1BUlkgS0VZLAogIElTU04gVEVYVCBOT1QgTlVMTCwKICB2b2x1bWUgSU5URUdFUiBOT1QgTlVMTCwKICBpc3N1ZSBJTlRFR0VSIE5PVCBOVUxMLAogIHB1YlllYXIgVEVYVCBOT1QgTlVMTCwKICBwdWJNb250aCBURVhUIE5PVCBOVUxMLAogIHRpdGxlIFRFWFQgTk9UIE5VTEwKKTsKYGBgCgojIyBDcmVhdGUgdGFibGUgQXV0aG9yCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbjF9CkRST1AgVEFCTEUgSUYgRVhJU1RTIEF1dGhvcnM7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29uMX0KQ1JFQVRFIFRBQkxFIEF1dGhvcnMgKAogIGF1dGhvcklkIElOVEVHRVIgUFJJTUFSWSBLRVksCiAgbGFzdE5hbWUgVEVYVCwKICBmb3JlTmFtZSBURVhUCik7CmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEhpc3RvcnkKYGBge3NxbCBjb25uZWN0aW9uPWRiY29uMX0KRFJPUCBUQUJMRSBJRiBFWElTVFMgSGlzdG9yeXM7CmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29uMX0KQ1JFQVRFIFRBQkxFIEhpc3RvcnlzICgKICBoSWQgSU5URUdFUiBQUklNQVJZIEtFWSwKICBwdWJTdGF0dXMgVEVYVCBOT1QgTlVMTCwKICB5ZWFyIElOVEVHRVIgTk9UIE5VTEwsCiAgbW9udGggSU5URUdFUiBOT1QgTlVMTCwKICBkYXkgSU5URUdFUiBOT1QgTlVMTAopCmBgYAoKIyMgQ3JlYXRlIHRhYmxlIEFydGljbGVGYWN0CmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbjF9CkRST1AgVEFCTEUgSUYgRVhJU1RTIEFydGljbGVGYWN0OwpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbjF9CkNSRUFURSBUQUJMRSBBcnRpY2xlRmFjdCAoCiAgaklkIFRFWFQgTk9UIE5VTEwsCiAgYXV0aG9ySWQgSU5URUdFUiBOT1QgTlVMTCwKICBoSWQgSU5URUdFUiBOT1QgTlVMTCwKICBwdWJNb2RlIFRFWFQsCiAgdGl0bGUgVEVYVCwKICBQUklNQVJZIEtFWSAoaklkLCBhdXRob3JJZCwgaElkKSwKICBGT1JFSUdOIEtFWSAoaklkKSBSRUZFUkVOQ0VTIEpvdXJuYWxzIChqSWQpLAogIEZPUkVJR04gS0VZIChhdXRob3JJZCkgUkVGRVJFTkNFUyBBdXRob3JzIChhdXRob3JJZCksCiAgRk9SRUlHTiBLRVkgKGhJZCkgUkVGRVJFTkNFUyBIaXN0b3J5cyAoaElkKQopOwpgYGAKCgoKYGBge3J9CmRiV3JpdGVUYWJsZShkYmNvbjEsICJKb3VybmFscyIsIGpvdXJuYWwsIG92ZXJ3cml0ZSA9IFQsIHJvdy5uYW1lcyA9IEYpCmRiV3JpdGVUYWJsZShkYmNvbjEsICJBdXRob3JzIiwgYXV0aG9yLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKQpkYldyaXRlVGFibGUoZGJjb24xLCAiSGlzdG9yeXMiLCBoaXN0b3J5LCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKQpkYldyaXRlVGFibGUoZGJjb24xLCAiQXJ0aWNsZUZhY3QiLCB0ZW1wLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKQpgYGAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYmNvbjF9ClNFTEVDVCAqIEZST00gSm91cm5hbHMKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb24xfQpTRUxFQ1QgKiBGUk9NIEF1dGhvcnMKYGBgCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJjb24xfQpTRUxFQ1QgKiBGUk9NIEhpc3RvcnlzCmBgYAoKYGBge3NxbCBjb25uZWN0aW9uPWRiY29uMX0KU0VMRUNUICogRlJPTSBBcnRpY2xlRmFjdApgYGAKCmBgYHtyfQpkYkRpc2Nvbm5lY3QoZGJjb24pCmRiRGlzY29ubmVjdChkYmNvbjEpCmBgYAoK</div>
 
 
 
