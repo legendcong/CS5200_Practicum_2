@@ -239,8 +239,9 @@ SELECT * FROM History;
 **q2**
 
 ```{r}
-sqlCmd <- "SELECT j.ISSN AS ISSN, j.title AS title, ji.volume AS volume, 
-            ji.issue AS issue, ji.pubYear As pubYear, ji.pubMonth As pubMonth
+sqlCmd <- "SELECT ji.jId AS jId, j.ISSN AS ISSN, j.title AS title, 
+              ji.volume AS volume, ji.issue AS issue, 
+              ji.pubYear As pubYear, ji.pubMonth As pubMonth
             FROM Journal AS j
             JOIN JournalIssue AS ji ON j.ISSN = ji.ISSN"
 journal = dbGetQuery(dbcon, sqlCmd)
@@ -259,6 +260,18 @@ history = dbGetQuery(dbcon, sqlCmd)
 ```
 
 ```{r}
+sqlCmd <- "SELECT JournalIssue.jId AS jId, AuthorShip.authorId AS authorId, 
+            History.hId AS hId, JournalIssue.ISSN AS ISSN, 
+            Article.pubMode AS pubMode, Article.title AS title
+          FROM Article
+          JOIN AuthorShip ON Article.articleId = AuthorShip.articleId
+          JOIN JournalIssue ON Article.jId = JournalIssue.jId
+          JOIN History ON Article.articleId = History.articleId"
+temp = dbGetQuery(dbcon,sqlCmd)
+```
+
+
+```{r}
 library(RSQLite)
 
 dbFile = "./Practicum2_Part2.sqlite"
@@ -273,7 +286,8 @@ DROP TABLE IF EXISTS Journals;
 
 ```{sql connection=dbcon1}
 CREATE TABLE Journals (
-  ISSN TEXT PRIMARY KEY,
+  jId INTEGER PRIMARY KEY,
+  ISSN TEXT NOT NULL,
   volume INTEGER NOT NULL,
   issue INTEGER NOT NULL,
   pubYear TEXT NOT NULL,
@@ -309,6 +323,27 @@ CREATE TABLE Historys (
   day INTEGER NOT NULL
 )
 ```
+
+## Create table ArticleFact
+```{sql connection=dbcon1}
+DROP TABLE IF EXISTS ArticleFact;
+```
+
+```{sql connection=dbcon1}
+CREATE TABLE ArticleFact (
+  jId TEXT NOT NULL,
+  authorId INTEGER NOT NULL,
+  hId INTEGER NOT NULL,
+  pubMode TEXT,
+  title TEXT,
+  PRIMARY KEY (jId, authorId, hId),
+  FOREIGN KEY (jId) REFERENCES Journals (jId),
+  FOREIGN KEY (authorId) REFERENCES Authors (authorId),
+  FOREIGN KEY (hId) REFERENCES Historys (hId)
+);
+```
+
+
 
 ```{r}
 dbWriteTable(dbcon1, "Journals", journal, overwrite = T, row.names = F)
