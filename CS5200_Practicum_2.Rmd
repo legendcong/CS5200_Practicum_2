@@ -273,6 +273,7 @@ temp = dbGetQuery(dbcon,sqlCmd)
 
 ```{r}
 library(RSQLite)
+library(ggplot2)
 
 dbFile = "./Practicum2_Part2.sqlite"
 
@@ -349,7 +350,6 @@ CREATE TABLE ArticleFact (
 dbWriteTable(dbcon1, "Journals", journal, overwrite = T, row.names = F)
 dbWriteTable(dbcon1, "Authors", author, overwrite = T, row.names = F)
 dbWriteTable(dbcon1, "Historys", history, overwrite = T, row.names = F)
-dbWriteTable(dbcon1, "ArticleFact", temp, overwrite = T, row.names = F)
 ```
 
 ```{sql connection=dbcon1}
@@ -364,12 +364,19 @@ SELECT * FROM Authors
 SELECT * FROM Historys
 ```
 
-```{sql connection=dbcon1}
-SELECT * FROM ArticleFact
+```{r}
+patternData <- dbGetQuery(dbcon, "select month, count(1) as hid from History where pubstatus = 'pubmed' group by month order by month asc")
+month <- patternData[,1]
+publications <- patternData[,2]
+
+ggplot(patternData, aes(x=month, y=publications)) + geom_line() + xlim(0,12) + ylim(0,6) + labs(title="Monthly Pattern for Publication") + theme(plot.title = element_text(hjust = 1)) + scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9,10,11,12))
+
 ```
+
 
 ```{r}
 dbDisconnect(dbcon)
 dbDisconnect(dbcon1)
 ```
+
 
