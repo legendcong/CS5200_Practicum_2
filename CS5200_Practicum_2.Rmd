@@ -4,7 +4,25 @@ output:
   pdf_document: default
   html_notebook: default
 ---
-# Create database schema
+# Introduction
+
+## Group member
+Bingyan Li, li.bingy@northeastern.edu  
+Pu Liu, liu.pu1@northeastern.edu  
+Sicong Ye ye.sic@northeastern.edu  
+Yuecheng Shi, shi.yuec@northeastern.edu  
+
+## Schema
+
+### Part 1
+![](./Practicum2_schema1.png)
+
+### Part 2
+
+![](./Practicum2_schema2.png)
+
+
+# Part1 - Normalized database from XML
 ## Connect to database
 ```{r}
 library(RSQLite)
@@ -183,11 +201,6 @@ article = subset(article, select = 1:5)
 dbWriteTable(dbcon,name = "Article", value = article, append = TRUE)
 ```
 
-```{sql connection=dbcon}
-SELECT * FROM Article;
-```
-
-
 ## Load AuthorShip table
 ```{r}
 # Extract authorship Data
@@ -236,7 +249,7 @@ dbWriteTable(dbcon,name = "History", value = historys, append = TRUE)
 SELECT * FROM History;
 ```
 
-**q2**
+# Part2 - Data warehouse
 
 ```{r}
 sqlCmd <- "SELECT ji.jId AS jId, j.ISSN AS ISSN, j.title AS title, 
@@ -267,7 +280,7 @@ sqlCmd <- "SELECT JournalIssue.jId AS jId, AuthorShip.authorId AS authorId,
           JOIN AuthorShip ON Article.articleId = AuthorShip.articleId
           JOIN JournalIssue ON Article.jId = JournalIssue.jId
           JOIN History ON Article.articleId = History.articleId"
-temp = dbGetQuery(dbcon,sqlCmd)
+articleFact = dbGetQuery(dbcon,sqlCmd)
 ```
 
 
@@ -350,8 +363,10 @@ CREATE TABLE ArticleFact (
 dbWriteTable(dbcon1, "Journals", journal, overwrite = T, row.names = F)
 dbWriteTable(dbcon1, "Authors", author, overwrite = T, row.names = F)
 dbWriteTable(dbcon1, "Historys", history, overwrite = T, row.names = F)
+dbWriteTable(dbcon1, "ArticleFact", articleFact, overwrite = T, row.names = F)
 ```
 
+## Examine Database
 ```{sql connection=dbcon1}
 SELECT * FROM Journals
 ```
@@ -363,13 +378,39 @@ SELECT * FROM Authors
 ```{sql connection=dbcon1}
 SELECT * FROM Historys
 ```
-
+# Part3 - Data mining
+## Monthly publication
 ```{r}
-patternData <- dbGetQuery(dbcon, "select month, count(1) as hid from History where pubstatus = 'pubmed' group by month order by month asc")
+patternData <- dbGetQuery(dbcon, "SELECT month, count(1) as hid from History 
+                          WHERE pubstatus = 'pubmed' GROUP BY month 
+                          ORDER BY month DESC")
 month <- patternData[,1]
 publications <- patternData[,2]
 
-ggplot(patternData, aes(x=month, y=publications)) + geom_line()  + ylim(0,6) + labs(title="Monthly Pattern for Publication") + theme(plot.title = element_text(hjust = 1)) + scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9,10,11,12))
+ggplot(patternData, aes(x=month, y=publications)) + geom_line()  + ylim(0,6) + labs(title="Monthly Pattern for Publication") + 
+theme(plot.title = element_text(hjust = 1)) +  scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9,10,11,12))
+```
+## Top 10 Articles with most authors
+```{r}
+authorCntData = dbGetQuery(dbcon1,"SELECT COUNT(DISTINCT(authorId)) AS authorCount, title 
+                           FROM ArticleFact GROUP BY jId 
+                           ORDER BY authorCount DESC LIMIT 10;")
+ggplot(authorCntData, aes(x = title, y = authorCount)) + 
+  geom_bar(stat = 'identity') + 
+  theme(axis.text.x = element_text(angle = -45, hjust = 0.5, vjust = 0.5)) +
+  scale_x_discrete(labels=substr(authorCntData$title,0,10)) +
+  labs(title="Top 10 Articles with most authors")
+```
+## Top 10 Articles with most change history
+```{r}
+historyCntData = dbGetQuery(dbcon1,"SELECT COUNT(DISTINCT(hId)) AS historyCount, title 
+                           FROM ArticleFact GROUP BY jId 
+                           ORDER BY historyCount DESC LIMIT 10;")
+ggplot(historyCntData, aes(x = title, y = historyCount)) + 
+  geom_bar(stat = 'identity') + 
+  theme(axis.text.x = element_text(angle = -45, hjust = 0.5, vjust = 0.5)) +
+  scale_x_discrete(labels=substr(historyCntData$title,0,10)) +
+  labs(title="Top 10 Articles with most change history")
 ```
 
 
